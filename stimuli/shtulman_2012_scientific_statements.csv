@@ -1,0 +1,201 @@
+Category,Concept,T1,T2,Statement,M proportion correct,M response time (ms)
+Astronomy,Planet,T,T,Planets are more massive than moons.,0.83,3943
+Astronomy,Planet,F,F,Asteroids are more massive than planets.,0.79,3913
+Astronomy,Planet,T,F,Planets are more massive than stars.,0.64,3129
+Astronomy,Planet,F,T,Stars are more massive than planets.,0.61,3726
+Astronomy,Star,T,T,The sun produces light.,0.99,2546
+Astronomy,Star,F,F,The sun produces sound.,0.84,2906
+Astronomy,Star,T,F,The moon produces light.,0.65,3111
+Astronomy,Star,F,T,The sun produces gravity.,0.54,3348
+Astronomy,Solar system,T,T,The moon revolves around the earth.,0.95,3121
+Astronomy,Solar system,F,F,The sun revolves around the moon.,0.94,3271
+Astronomy,Solar system,T,F,The sun revolves around the earth.,0.86,3889
+Astronomy,Solar system,F,T,The earth revolves around the sun.,0.83,2948
+Astronomy,Lunar phase,T,T,Phases of the moon are caused by changes in illumination.,0.95,3576
+Astronomy,Lunar phase,F,F,Phases of the moon are caused by clouds.,0.93,3527
+Astronomy,Lunar phase,T,F,Phases of the moon are caused by the earth's shadow.,0.39,5285
+Astronomy,Lunar phase,F,T,Phases of the moon are caused by the moon's orbit.,0.68,4784
+Astronomy,Season,T,T,A change in overall sunlight causes the seasons.,0.95,3855
+Astronomy,Season,F,F,The earth's rotation causes the seasons.,0.67,4901
+Astronomy,Season,T,F,The earth's distance from the sun causes the seasons.,0.49,4457
+Astronomy,Season,F,T,The earth's tilt causes the seasons.,0.75,3590
+Evolution,Common ancestry,T,T,Humans are more closely related to apes than monkeys.,0.87,4122
+Evolution,Common ancestry,F,F,Whales are more closely related to plants than fish.,0.97,4204
+Evolution,Common ancestry,T,F,Apes are more closely related to monkeys than humans.,0.41,4983
+Evolution,Common ancestry,F,T,Whales are more closely related to humans than fish.,0.51,4563
+Evolution,Phylogeny,T,T,Humans are descended from tree-dwelling creatures.,0.51,3557
+Evolution,Phylogeny,F,F,Humans are descended from plants.,0.89,4089
+Evolution,Phylogeny,T,F,Humans are descended from chimpanzees.,0.41,3448
+Evolution,Phylogeny,F,T,Humans are descended from sea-dwelling creatures.,0.55,5035
+Evolution,Variation,T,T,Evolution requires differential survival.,0.91,4044
+Evolution,Variation,F,F,Evolution requires climate stability.,0.66,4052
+Evolution,Variation,T,F,Evolution requires long periods of time.,0.09,4237
+Evolution,Variation,F,T,Evolution requires within-species variation.,0.66,4128
+Evolution,Selection,T,T,Most organisms are adapted to their environment.,0.95,4066
+Evolution,Selection,F,F,Most organisms live in temperate climates.,0.48,3141
+Evolution,Selection,T,F,Most organisms have plenty to eat.,0.63,3722
+Evolution,Selection,F,T,Most organisms die before leaving offspring.,0.33,3496
+Evolution,Adaptation,T,T,Biological species evolve.,0.98,2809
+Evolution,Adaptation,F,F,Inanimate objects evolve.,0.84,3527
+Evolution,Adaptation,T,F,Individual organisms evolve.,0.44,4031
+Evolution,Adaptation,F,T,Computer viruses evolve.,0.48,3250
+Fractions,Addition,T,T,1/3 plus 1/3 is 2/3.,0.94,3222
+Fractions,Addition,F,F,1/3 plus 1/3 is 1/3.,0.97,3285
+Fractions,Addition,T,F,2/3 plus 2/4 is 2/7.,0.91,5263
+Fractions,Addition,F,T,1/10 plus 1/10 is 1/5.,0.86,4883
+Fractions,Division,T,T,4 divided by 2/1 is 2.,0.98,2659
+Fractions,Division,F,F,8 divided by 2/1 is 3.,0.99,2967
+Fractions,Division,T,F,8 divided by 1/2 is 4.,0.71,4583
+Fractions,Division,F,T,4 divided by 1/2 is 8.,0.75,4207
+Fractions,Conversion,T,T,All decimals are expressible as fractions.,0.71,4233
+Fractions,Conversion,F,F,All fractions are expressible as integers.,0.71,4481
+Fractions,Conversion,T,F,All fractions are expressible as decimals.,0.1,5375
+Fractions,Conversion,F,T,All integers are expressible as fractions.,0.79,4506
+Fractions,Ordering,T,T,12/13 is greater than 1/13.,0.97,2808
+Fractions,Ordering,F,F,1/17 is greater than 16/17.,0.96,4177
+Fractions,Ordering,T,F,1/17 is greater than 1/9.,0.94,5472
+Fractions,Ordering,F,T,1/13 is greater than 1/30.,0.94,3921
+Fractions,Infinite density,T,T,There are numbers between 1 and 3.,0.96,3679
+Fractions,Infinite density,F,F,There are numbers between 10 and 10.,0.75,3893
+Fractions,Infinite density,T,F,There are numbers between 1/10 and 10/100.,0.52,3685
+Fractions,Infinite density,F,T,There are numbers between 1/3 and 1/2.,0.93,3731
+Genetics,Heritability,T,T,Hair color is heritable.,0.98,2760
+Genetics,Heritability,F,F,Pierced ears are heritable.,0.98,2774
+Genetics,Heritability,T,F,Immunity to chickenpox is heritable.,0.68,3904
+Genetics,Heritability,F,T,Intelligence is heritable.,0.54,3287
+Genetics,Chromosome,T,T,Humans have more chromosomes than mosquitoes.,0.74,3988
+Genetics,Chromosome,F,F,Men have more chromosomes than women.,0.85,3751
+Genetics,Chromosome,T,F,Adults have more chromosomes than children.,0.91,3539
+Genetics,Chromosome,F,T,Skin cells have more chromosomes than egg cells.,0.47,5255
+Genetics,Dominance,T,T,Two brown-eyed parents could have a brown-eyed baby.,0.97,3369
+Genetics,Dominance,F,F,Two blue-eyed parents could have a brown-eyed baby.,0.9,4730
+Genetics,Dominance,T,F,A blue-eyed baby must have two blue-eyed parents.,0.85,3632
+Genetics,Dominance,F,T,Two brown-eyed parents could have a blue-eyed baby.,0.23,3294
+Genetics,Expression,T,T,Genes that code for eye color can be found in the eye.,0.85,4996
+Genetics,Expression,F,F,Genes that code for eye color can be found in hair.,0.48,3875
+Genetics,Expression,T,F,Genes that code for eye color can be found in tears.,0.71,4114
+Genetics,Expression,F,T,Genes that code for eye color can be found in the liver.,0.38,4626
+Genetics,Mutation,T,T,Radiation can change one's genome.,0.79,3365
+Genetics,Mutation,F,F,Sunscreen can change one's genome.,0.93,3213
+Genetics,Mutation,T,F,Exercise can change one's genome.,0.81,3553
+Genetics,Mutation,F,T,Viruses can change one's genome.,0.53,3602
+Germs,Contagion,T,T,Being sneezed on can make a person sick.,0.95,2870
+Germs,Contagion,F,F,Being happy can make a person sick.,0.89,3447
+Germs,Contagion,T,F,Being cold can make a person sick.,0.36,3468
+Germs,Contagion,F,T,Being depressed can make a person sick.,0.91,2840
+Germs,Contamination,T,T,Rotting meat contains germs.,0.96,2638
+Germs,Contamination,F,F,Sunshine contains germs.,0.89,2990
+Germs,Contamination,T,F,Urine contains germs.,0.27,3780
+Germs,Contamination,F,T,Dish sponges contain germs.,0.96,2919
+Germs,Infection,T,T,Germs enter the body through cuts.,0.97,2553
+Germs,Infection,F,F,Germs enter the body through the hair.,0.77,3535
+Germs,Infection,T,F,Germs enter the body through the skin.,0.57,4172
+Germs,Infection,F,T,Germs enter the body through the eyes.,0.83,2797
+Germs,Sterilization,T,T,Alcohol kills germs.,0.91,2377
+Germs,Sterilization,F,F,Kindness kills germs.,0.95,2662
+Germs,Sterilization,T,F,Water kills germs.,0.83,3058
+Germs,Sterilization,F,T,Heat kills germs.,0.89,2647
+Germs,Microbe,T,T,Germs have a shape.,0.83,2652
+Germs,Microbe,F,F,Germs have feelings.,0.97,2053
+Germs,Microbe,T,F,Germs have an odor.,0.65,2996
+Germs,Microbe,F,T,Germs have DNA.,0.71,2639
+Matter,Mass,T,T,Rocks are composed of matter.,0.97,2521
+Matter,Mass,F,F,Numbers are composed of matter.,0.9,3386
+Matter,Mass,T,F,Fire is composed of matter.,0.29,3860
+Matter,Mass,F,T,Air is composed of matter.,0.87,2696
+Matter,Weight,T,T,A liter of water weighs more than a liter of air.,0.62,4771
+Matter,Weight,F,F,A pound of steel weighs more than a ton of steel.,0.94,4833
+Matter,Weight,T,F,A pound of steel weighs more than a pound of feathers.,0.66,3806
+Matter,Weight,F,T,A liter of water weighs more than a liter of ice.,0.29,6172
+Matter,Density,T,T,Steel is denser than foam.,0.95,3425
+Matter,Density,F,F,Foam is denser than brick.,0.94,3598
+Matter,Density,T,F,Ice is denser than water.,0.37,4163
+Matter,Density,F,T,A cold penny is denser than a hot penny.,0.5,4982
+Matter,Divisibility,T,T,A log can be cut in half.,0.99,2563
+Matter,Divisibility,F,F,An idea can be cut in half.,0.85,2956
+Matter,Divisibility,T,F,A shadow can be cut in half.,0.87,2955
+Matter,Divisibility,F,T,A grain of sand can be cut in half.,0.91,3299
+Matter,Atom,T,T,Atoms are the constituents of matter.,0.99,2138
+Matter,Atom,F,F,Atoms are visible to the naked eye.,0.91,2978
+Matter,Atom,T,F,Atoms are weightless.,0.89,2950
+Matter,Atom,F,T,Atoms are mostly empty space.,0.55,3537
+Mechanics,Force,T,T,Forces can be strong or weak.,0.97,2629
+Mechanics,Force,F,F,Forces can be male or female.,0.85,2720
+Mechanics,Force,T,F,Forces can be straight or curved.,0.36,4360
+Mechanics,Force,F,T,Forces can be balanced or unbalanced.,0.82,3214
+Mechanics,Velocity,T,T,A moving bullet loses speed.,0.86,3677
+Mechanics,Velocity,F,F,A moving bullet loses weight.,0.83,3976
+Mechanics,Velocity,T,F,A moving bullet loses force.,0.19,4878
+Mechanics,Velocity,F,T,A moving bullet loses height.,0.7,4133
+Mechanics,Acceleration,T,T,Constant acceleration requires constant force.,0.81,4375
+Mechanics,Acceleration,F,F,Constant speed requires constant acceleration.,0.61,5516
+Mechanics,Acceleration,T,F,Constant motion requires constant force.,0.28,4845
+Mechanics,Acceleration,F,T,Constant force can yield constant rest.,0.45,5630
+Mechanics,Momentum,T,T,Momentum can be transferred from one object to another.,0.87,3610
+Mechanics,Momentum,F,F,Color can be transferred from one object to another.,0.66,3963
+Mechanics,Momentum,T,F,Forces can be transferred from one object to another.,0.16,4968
+Mechanics,Momentum,F,T,Energy can be transferred from one object to another.,0.95,3096
+Mechanics,Gravity,T,T,Anvils fall through air faster than feathers.,0.69,4463
+Mechanics,Gravity,F,F,Bright objects fall through air faster than dark objects.,0.97,4329
+Mechanics,Gravity,T,F,Heavy balls fall through air faster than light balls.,0.4,4544
+Mechanics,Gravity,F,T,Pointy objects fall through air faster than flat objects.,0.68,4955
+Physiology,Life,T,T,Fish are alive.,0.97,1618
+Physiology,Life,F,F,Rocks are alive.,0.92,2144
+Physiology,Life,T,F,The sun is alive.,0.93,2716
+Physiology,Life,F,T,Coral is alive.,0.68,2026
+Physiology,Death,T,T,Turtles can die.,0.97,1827
+Physiology,Death,F,F,Screwdrivers can die.,0.99,2405
+Physiology,Death,T,F,Clouds can die.,0.93,2585
+Physiology,Death,F,T,Mushrooms can die.,0.93,2454
+Physiology,Reproduction,T,T,Tigers can reproduce.,0.99,2761
+Physiology,Reproduction,F,F,Chairs can reproduce.,0.96,3218
+Physiology,Reproduction,T,F,Caterpillars can reproduce.,0.61,4615
+Physiology,Reproduction,F,T,Ferns can reproduce.,0.72,3666
+Physiology,Metabolism,T,T,People turn food into energy.,0.96,2620
+Physiology,Metabolism,F,F,Rocks turn food into energy.,0.93,3832
+Physiology,Metabolism,T,F,Plants turn food into energy.,0.75,5194
+Physiology,Metabolism,F,T,Bacteria turn food into energy.,0.75,3758
+Physiology,Kinship,T,T,A baby can be a niece or a nephew.,0.93,3395
+Physiology,Kinship,F,F,A baby can be a mother or a father.,0.8,4250
+Physiology,Kinship,T,F,A baby can be identical to an older sibling.,0.81,4489
+Physiology,Kinship,F,T,A baby can be an uncle or an aunt.,0.81,4024
+Thermodynamics,Heat,T,T,The sun has heat.,0.99,2223
+Thermodynamics,Heat,F,F,Gravity has heat.,0.85,2595
+Thermodynamics,Heat,T,F,Atoms have heat.,0.21,3451
+Thermodynamics,Heat,F,T,Ice has heat.,0.66,2989
+Thermodynamics,Heat source,T,T,Ovens produce heat.,0.97,2819
+Thermodynamics,Heat source,F,F,Rain produces heat.,0.7,3109
+Thermodynamics,Heat source,T,F,Coats produce heat.,0.71,3863
+Thermodynamics,Heat source,F,T,Pressure produces heat.,0.73,3470
+Thermodynamics,Heat transfer,T,T,Water transfers heat to ice.,0.6,4710
+Thermodynamics,Heat transfer,F,F,Cold objects transfer heat to warm objects.,0.85,4877
+Thermodynamics,Heat transfer,T,F,Water transfers heat to steam.,0.53,5870
+Thermodynamics,Heat transfer,F,T,Cold objects transfer heat to even colder objects.,0.72,5279
+Thermodynamics,Temperature,T,T,Ice has a lower temperature than water.,0.92,3744
+Thermodynamics,Temperature,F,F,Steam has a lower temperature than ice.,0.92,4382
+Thermodynamics,Temperature,T,F,Two cups of ice have a lower temperature than one.,0.77,5282
+Thermodynamics,Temperature,F,T,Boiling water has a lower temperature than steam.,0.56,5067
+Thermodynamics,Thermal expansion,T,T,Heat increases an object's temperature.,0.95,3919
+Thermodynamics,Thermal expansion,F,F,Heat increases an object's color.,0.73,3960
+Thermodynamics,Thermal expansion,T,F,Heat increases an object's weight.,0.89,4111
+Thermodynamics,Thermal expansion,F,T,Heat increases an object's size.,0.58,3965
+Waves,Light,T,T,Rainbows contain all colors of light.,0.75,4145
+Waves,Light,F,F,Shadows contain all colors of light.,0.95,2973
+Waves,Light,T,F,Black objects reflect all colors of light.,0.67,4599
+Waves,Light,F,T,White light contains all colors of light.,0.75,3653
+Waves,Color,T,T,Red objects reflect red light.,0.69,3531
+Waves,Color,F,F,Red objects reflect blue light.,0.7,4008
+Waves,Color,T,F,Red objects absorb red light.,0.64,3695
+Waves,Color,F,T,Red objects absorb blue light.,0.61,3711
+Waves,Sound,T,T,Sounds can be loud or quiet.,0.94,2894
+Waves,Sound,F,F,Sounds can be dead or alive.,0.88,3066
+Waves,Sound,T,F,Sounds can be near or far.,0.12,3467
+Waves,Sound,F,T,Sounds can be direct or reflected.,0.97,3827
+Waves,Propagation,T,T,Sound travels through air.,0.98,2516
+Waves,Propagation,F,F,Sound travels through foam.,0.57,3763
+Waves,Propagation,T,F,Sound travels through a vacuum.,0.27,3377
+Waves,Propagation,F,T,Sound travels through metal.,0.78,3418
+Waves,Reflection,T,T,Mirrors reflect light.,0.82,4787
+Waves,Reflection,F,F,Foam reflects sound.,0.93,4269
+Waves,Reflection,T,F,Prisms reflect light.,0.29,5533
+Waves,Reflection,F,T,Mirrors reflect sound.,0.53,4978
