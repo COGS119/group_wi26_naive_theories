@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>My experiment</title>
+  <title>Naive Theories</title>
   <script src="https://unpkg.com/jspsych@8.0.0"></script>
   <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.0.0"></script>
   <!-- load in the scientific statements js-->
@@ -13,22 +13,24 @@
 <body></body>
 <script>
 
-  /* initialize jsPsych */
+  // initialize jsPsych 
   var jsPsych = initJsPsych({
   on_finish: function() {
     jsPsych.data.displayData();
   }
 });
 
-  /* create timeline */
+  // create timeline
   var timeline = [];
 
-  /* load in stimulus list */
+  // load in stimulus list 
   // IDEA: convert the csv to json format and store that item as a variable in .js code (loaded above)
   // each element in the variable scientific statements is one row in the csv, structured as an Object/ dictionary
   // you can view the structure by looking in the console
   console.log(scientific_statements)
-  // MAIN TO DO: How can we systematically randomize all stimuli?
+
+  // randomizing the statements
+  scientific_statements = jsPsych.randomization.shuffle(scientific_statements)
 
   //let's store one of these elements
   stimulus_item = scientific_statements[0]
