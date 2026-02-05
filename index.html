@@ -68,17 +68,6 @@
   categories = jsPsych.randomization.shuffle(categories);
   console.log(categories);
 
-  for (i = 0; i < categories.length; i++) {
-  // introduce the category
-    var before_category = {
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: function() {
-        return "<p>Next, you will see statements about <b>" + categories[i] + "</b>. Press any key to continue.</p>";
-      }
-    }
-  } 
-  timeline.push(before_category);
-
   var shuffled_scientific_statements = [];
   // randomizing the statements within each category/domain
   for (i = 0; i < categories.length; i++) {
@@ -88,47 +77,54 @@
     });
     category_statements = jsPsych.randomization.shuffle(category_statements);
     shuffled_scientific_statements = shuffled_scientific_statements.concat(category_statements);
-  }
 
-  //let's store one of these elements
-  stimulus_item = shuffled_scientific_statements[0];
- 
-  // here's how we can construct a simple reaction time trial
-  // TO DO: what else do we need to add to the trial procedure? What other information should we store? How can we turn this into a complete experiment timeline?
-  
-  // iterate through trials
-  console.log(stimulus_item);
-  for (var i = 0; i < shuffled_scientific_statements.length; i++) {
-    var stimulus_item = shuffled_scientific_statements[i];
-    var trial = {
-          type: jsPsychHtmlKeyboardResponse,
-          prompt: "<p>Press <b>z</b> if the statement is true, <b>m</b> if the statement is false.<\p>",
-          choices: ["z", "m"],
-          // store elements from the stimulus item
-          data: { 
-            category: stimulus_item['Category'],
-            correct_response: stimulus_item['T2'],
-            naive_theory: stimulus_item['T1'],
-            is_consistent: stimulus_item['T1'] == stimulus_item['T2']
-          },
-          // format the statement a bit using html
-          stimulus: "<b><font size=6>"+stimulus_item['Statement']+"</font></b>",
-          on_finish: function(data){
-            if (data.response === "z") {
-              data.response_tf = "T";
-            } else if (data.response === "m") {
-              data.response_tf = "F";
-            }
-
-            // store the accuracy
-            data.correct = data.response_tf === data.correct_response;
-          }
+    // introduce the category
+      var before_category = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: function() {
+          return "<p>Next, you will see statements about <b>" + category + "</b>. Press any key to continue.</p>";
         }
+    } 
+    timeline.push(before_category);
 
-        //push trial to timeline
-        timeline.push(trial);
+    //let's store one of these elements
+    stimulus_item = shuffled_scientific_statements[0];
+
+    // iterate through trials
+     console.log(stimulus_item);
+    for (var i = 0; i < shuffled_scientific_statements.length; i++) {
+      var stimulus_item = shuffled_scientific_statements[i];
+      var trial = {
+            type: jsPsychHtmlKeyboardResponse,
+            prompt: "<p>Press <b>z</b> if the statement is true, <b>m</b> if the statement is false.<\p>",
+            choices: ["z", "m"],
+            // store elements from the stimulus item
+            data: { 
+              category: stimulus_item['Category'],
+              correct_response: stimulus_item['T2'],
+              naive_theory: stimulus_item['T1'],
+              is_consistent: stimulus_item['T1'] == stimulus_item['T2']
+            },
+            // format the statement a bit using html
+            stimulus: "<b><font size=6>"+stimulus_item['Statement']+"</font></b>",
+            on_finish: function(data){
+              if (data.response === "z") {
+                data.response_tf = "T";
+              } else if (data.response === "m") {
+                data.response_tf = "F";
+              }
+
+              // store the accuracy
+              data.correct = data.response_tf === data.correct_response;
+            }
+          }
+
+          //push trial to timeline
+          timeline.push(trial);
+
+        category_statements = [];
+    }
   }
-  
 
 
   /* start the experiment */
