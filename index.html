@@ -27,14 +27,25 @@
   // IDEA: convert the csv to json format and store that item as a variable in .js code (loaded above)
   // each element in the variable scientific statements is one row in the csv, structured as an Object/ dictionary
   // you can view the structure by looking in the console
-  console.log(scientific_statements)
+  console.log(scientific_statements);
 
-  // randomizing the statements
-  scientific_statements = jsPsych.randomization.shuffle(scientific_statements)
+  // categories for randomization
+  var categories = ['Astronomy', 'Evolution', 'Fractions', 'Genetics', 'Germs', 'Matter', 'Mechanics', 'Physiology', 'Thermodynamics', 'Waves'];
+  categories = jsPsych.randomization.shuffle(categories);
+
+  // randomizing the statements within each category/domain
+  for (i = 0; i < categories.length; i++) {
+    var category = categories[i];
+    var category_statements = scientific_statements.filter(function(item) {
+      return item.Category == category;
+    });
+    category_statements = jsPsych.randomization.shuffle(category_statements);
+    scientific_statements = scientific_statements.concat(category_statements);
+  }
 
   //let's store one of these elements
-  stimulus_item = scientific_statements[0]
-  console.log(stimulus_item)
+  stimulus_item = scientific_statements[0];
+  console.log(stimulus_item);
   //This is what the stimulus item now looks like )check the console to confirm
   // {
   //   "Category": "Astronomy",
@@ -50,16 +61,18 @@
   // TO DO: what else do we need to add to the trial procedure? What other information should we store? How can we turn this into a complete experiment timeline?
   
   // iterate through trials
-  for (var i = 0; i < 2; i++) {
+  for (var i = 0; i < 21; i++) {
     var stimulus_item = scientific_statements[i];
     var trial = {
           type: jsPsychHtmlKeyboardResponse,
-          prompt: "<p>Press z if the statement is true, m if the statement is false.<\p>",
+          prompt: "<p>Press <b>z</b> if the statement is true, <b>m</b> if the statement is false.<\p>",
           choices: ["z", "m"],
           // store elements from the stimulus item
           data: { 
             category: stimulus_item['Category'],
-            correct_response: stimulus_item['T2']
+            correct_response: stimulus_item['T2'],
+            naive_theory: stimulus_item['T1'],
+            is_consistent: stimulus_item['T1'] == stimulus_item['T2']
           },
           // format the statement a bit using html
           stimulus: "<b><font size=6>"+stimulus_item['Statement']+"</font></b>",
