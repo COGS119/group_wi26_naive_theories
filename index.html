@@ -68,16 +68,16 @@
   categories = jsPsych.randomization.shuffle(categories);
   console.log(categories);
 
-  // for (i = 0; i < categories.length; i++) {
-  // // introduce the category
-  //   var before_category = {
-  //     type: jsPsychHtmlKeyboardResponse,
-  //     stimulus: function() {
-  //       return "<p>Next, you will see statements about <b>" + categories[0] + "</b>. Press any key to continue.</p>";
-  //     }
-  //   }
-  // } 
-  // timeline.push(before_category);
+  for (i = 0; i < categories.length; i++) {
+  // introduce the category
+    var before_category = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: function() {
+        return "<p>Next, you will see statements about <b>" + categories[i] + "</b>. Press any key to continue.</p>";
+      }
+    }
+  } 
+  timeline.push(before_category);
 
   var shuffled_scientific_statements = [];
   // randomizing the statements within each category/domain
@@ -87,7 +87,7 @@
       return item.Category == category;
     });
     category_statements = jsPsych.randomization.shuffle(category_statements);
-    shuffled_scientific_statements = scientific_statements.concat(category_statements);
+    shuffled_scientific_statements = shuffled_scientific_statements.concat(category_statements);
   }
 
   //let's store one of these elements
@@ -97,7 +97,8 @@
   // TO DO: what else do we need to add to the trial procedure? What other information should we store? How can we turn this into a complete experiment timeline?
   
   // iterate through trials
-  for (var i = 0; i < 21; i++) {
+  console.log(stimulus_item);
+  for (var i = 0; i < shuffled_scientific_statements.length; i++) {
     var stimulus_item = shuffled_scientific_statements[i];
     var trial = {
           type: jsPsychHtmlKeyboardResponse,
