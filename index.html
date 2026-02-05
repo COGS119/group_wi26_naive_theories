@@ -126,9 +126,69 @@
     }
   }
 
+  // closing of the experiment
+    var end_experiment = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `
+        <p>Thank you for completing this portion of the 
+        experiment. We now have a few  questions for you.</p>
+        <p>Press any key to proceed, and click submit once you are 
+        done with the questions! Thanks!! </p>
+        `};
+
+    // demographic questions
+    var demographics = {
+        type: jsPsychSurvey,
+        survey_json:{
+            showQuestionNumbers: false,
+            elements: [
+                {type: 'text',
+                title: "What is your age? Please input a number.",
+                name: 'age'
+                },
+                {type: 'multi-choice',
+                title: "What is your grade level?",
+                name: 'grade',
+                options: ['1st Year', '2nd Year', '3rd Year', '4th Year', '5th Year', 'Other']
+                },
+                {type: 'multi-choice',
+                title: "What is your gender?",
+                name: 'gender',
+                options: ['Male', 'Female', 'Non-binary', 'Prefer not to say', 'Other']
+                },
+                {type: 'text',
+                title: "What is your major?",
+                name: 'major'
+                },
+                {type: 'text',
+                title: "What do you think this experiment was about?",
+                name: 'experiment_topic'
+                },
+                {type: 'text',
+                title: "Did you experience any technical difficulties in this experiment?",
+                name: 'technical_difficulties'
+                }
+            ]
+        }
+    };
+
+    timeline.push(end_experiment);
+    timeline.push(demographics);
+
+// debrief of the experiment
+    var debrief = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `
+        <p> And that is the end of our experiment! Thanks for participating. Our study investigates 
+          whether some of the intuitive _____ people hold...</p>
+        `};
+
+    timeline.push(debrief);
 
   /* start the experiment */
   jsPsych.run(timeline);
+
+
 
 </script>
 
