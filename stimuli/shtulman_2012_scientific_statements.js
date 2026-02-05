@@ -1,6 +1,22 @@
 //array of scientific statements
 var scientific_statements = [
   {
+    "Category": "Attention_Check1",
+    "Statement": "Press 'b' if you are paying attention"
+  },
+  {
+    "Category": "Attention_Check2",
+    "Statement": "Press 'b' if you are paying attention"
+  },
+  {
+    "Category": "Attention_Check3",
+    "Statement": "Press 'b' if you are paying attention"
+  },
+  {
+    "Category": "Attention_Check4",
+    "Statement": "Press 'b' if you are paying attention"
+  },
+  {
     "Category": "Astronomy",
     "Concept": "Planet",
     "T1": "T",
