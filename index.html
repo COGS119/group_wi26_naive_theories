@@ -48,19 +48,37 @@
 
   // here's how we can construct a simple reaction time trial
   // TO DO: what else do we need to add to the trial procedure? What other information should we store? How can we turn this into a complete experiment timeline?
-  var trial = {
-        type: jsPsychHtmlKeyboardResponse,
-        prompt: "<p>Press z if the statement is true, m if the statement is false.<\p>",
-        choices: ["z", "m"],
-        // store elements from the stimulus item
-        data: { 
-          Category: stimulus_item['Category']
-        },
-        // format the statement a bit using html
-        stimulus: "<b><font size=6>"+stimulus_item['Statement']+"</font></b>"
-      }
+  
+  // iterate through trials
+  for (var i = 0; i < 2; i++) {
+    var stimulus_item = scientific_statements[i];
+    var trial = {
+          type: jsPsychHtmlKeyboardResponse,
+          prompt: "<p>Press z if the statement is true, m if the statement is false.<\p>",
+          choices: ["z", "m"],
+          // store elements from the stimulus item
+          data: { 
+            category: stimulus_item['Category'],
+            correct_response: stimulus_item['T2']
+          },
+          // format the statement a bit using html
+          stimulus: "<b><font size=6>"+stimulus_item['Statement']+"</font></b>",
+          on_finish: function(data){
+            if (data.response === "z") {
+              data.response_tf = "T";
+            } else if (data.response === "m") {
+              data.response_tf = "F";
+            }
 
-  timeline.push(trial);
+            // store the accuracy
+            data.correct = data.response_tf === data.correct_response;
+          }
+        }
+
+        //push trial to timeline
+        timeline.push(trial);
+  }
+  
 
 
   /* start the experiment */
