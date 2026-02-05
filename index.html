@@ -7,6 +7,8 @@
   <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.0.0"></script>
   <!-- load in the scientific statements js-->
   <script src="stimuli/shtulman_2012_scientific_statements.js"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-survey-text@2.0.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-fullscreen@1.2.1"></script>
   <link href="https://unpkg.com/jspsych@8.0.0/css/jspsych.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -29,10 +31,54 @@
   // you can view the structure by looking in the console
   console.log(scientific_statements);
 
-  // categories for randomization
-  var categories = ['Astronomy', 'Evolution', 'Fractions', 'Genetics', 'Germs', 'Matter', 'Mechanics', 'Physiology', 'Thermodynamics', 'Waves'];
-  categories = jsPsych.randomization.shuffle(categories);
+  // full screen
+  var fullscreen = {
+    type: jsPsychFullscreen,
+    fullscreen_mode: true
+  };
+  timeline.push(fullscreen);
 
+  // welcome message trial
+  var welcome = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: "Welcome to the experiment. You will see several statements about science/math. Please read the statements and respond with whether you think they are true (z) or false (m) as quickly as possible. Press any key to begin."
+  };
+  timeline.push(welcome);
+
+  // collecting participant ID
+  var pariticipant_id_entry = {
+    type: jsPsychSurveyText,
+    questions: [
+      { prompt: "Please enter your participant ID (e.g., p1):", name: "participant_id" } ],
+    on_finish: function(data){
+      console.log(data.response)
+      jsPsych.data.addProperties({
+        participant_id: data.response.participant_id
+      });
+    }
+  };
+  timeline.push(pariticipant_id_entry);
+
+  // categories for randomization
+  //var categories = ['Astronomy', 'Evolution', 'Fractions', 'Genetics', 'Germs', 'Matter', 'Mechanics', 'Physiology', 'Thermodynamics', 'Waves'];
+  var categories = scientific_statements.map(function(item) {
+    return item.Category;
+  });
+  categories = jsPsych.randomization.shuffle(categories);
+  console.log(categories);
+
+  // for (i = 0; i < categories.length; i++) {
+  // // introduce the category
+  //   var before_category = {
+  //     type: jsPsychHtmlKeyboardResponse,
+  //     stimulus: function() {
+  //       return "<p>Next, you will see statements about <b>" + categories[0] + "</b>. Press any key to continue.</p>";
+  //     }
+  //   }
+  // } 
+  // timeline.push(before_category);
+
+  var shuffled_scientific_statements = [];
   // randomizing the statements within each category/domain
   for (i = 0; i < categories.length; i++) {
     var category = categories[i];
@@ -40,29 +86,18 @@
       return item.Category == category;
     });
     category_statements = jsPsych.randomization.shuffle(category_statements);
-    scientific_statements = scientific_statements.concat(category_statements);
+    shuffled_scientific_statements = scientific_statements.concat(category_statements);
   }
 
   //let's store one of these elements
-  stimulus_item = scientific_statements[0];
-  console.log(stimulus_item);
-  //This is what the stimulus item now looks like )check the console to confirm
-  // {
-  //   "Category": "Astronomy",
-  //   "Concept": "Planet",
-  //   "T1": "T",
-  //   "T2": "T",
-  //   "Statement": "Planets are more massive than moons.",
-  //   "M proportion correct": 0.83,
-  //   "M response time (ms)": 3943
-  // }
-
+  stimulus_item = shuffled_scientific_statements[0];
+ 
   // here's how we can construct a simple reaction time trial
   // TO DO: what else do we need to add to the trial procedure? What other information should we store? How can we turn this into a complete experiment timeline?
   
   // iterate through trials
   for (var i = 0; i < 21; i++) {
-    var stimulus_item = scientific_statements[i];
+    var stimulus_item = shuffled_scientific_statements[i];
     var trial = {
           type: jsPsychHtmlKeyboardResponse,
           prompt: "<p>Press <b>z</b> if the statement is true, <b>m</b> if the statement is false.<\p>",
