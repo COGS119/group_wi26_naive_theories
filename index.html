@@ -9,6 +9,7 @@
   <script src="stimuli/shtulman_2012_scientific_statements.js"></script>
   <script src="https://unpkg.com/@jspsych/plugin-survey-text@2.0.0"></script>
   <script src="https://unpkg.com/@jspsych/plugin-fullscreen@1.2.1"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-survey@2.0.0"></script>
   <link href="https://unpkg.com/jspsych@8.0.0/css/jspsych.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -16,12 +17,11 @@
 <script>
 
   // initialize jsPsych 
-  // helllooo :)
   var jsPsych = initJsPsych({
-  on_finish: function() {
-    jsPsych.data.displayData();
-  }
-});
+    on_finish: function() {
+      jsPsych.data.displayData();
+    }
+  });
 
   // create timeline
   var timeline = [];
@@ -42,7 +42,7 @@
   // welcome message trial
   var welcome = {
     type: jsPsychHtmlKeyboardResponse,
-    stimulus: "Welcome to the experiment. You will see several statements about science/math. Please read the statements and respond with whether you think they are true (z) or false (m) as quickly as possible. Press any key to begin."
+    stimulus: "<p>Welcome to the experiment. You will see several statements about science/math. Please read the statements and respond with whether you think they are true (z) or false (m) as quickly as possible. Press any key to begin.</p>"
   };
   timeline.push(welcome);
 
@@ -60,130 +60,187 @@
   };
   timeline.push(pariticipant_id_entry);
 
-  // categories for randomization
-  //var categories = ['Astronomy', 'Evolution', 'Fractions', 'Genetics', 'Germs', 'Matter', 'Mechanics', 'Physiology', 'Thermodynamics', 'Waves'];
-  var categories = scientific_statements.map(function(item) {
-    return item.Category;
-  });
+  // randomizing the categories - used ChatGPT to help because didn't know how to pull the unique trials, and wanted it to be flexible for attention checks
+  var categories = [...new Set(scientific_statements.map(x => x.Category))];
   categories = jsPsych.randomization.shuffle(categories);
   console.log(categories);
 
-  var shuffled_scientific_statements = [];
-  // randomizing the statements within each category/domain
-  for (i = 0; i < categories.length; i++) {
-    var category = categories[i];
-    var category_statements = scientific_statements.filter(function(item) {
-      return item.Category == category;
-    });
-    category_statements = jsPsych.randomization.shuffle(category_statements);
-    shuffled_scientific_statements = shuffled_scientific_statements.concat(category_statements);
+  // core trials with statements
+  var statement_trial = {
+    type: jsPsychHtmlKeyboardResponse,
+    prompt: "<p>Press <b>z</b> if true and <b>m</b> if false.</p>",
+    stimulus: "<b><font size=6>" + jsPsych.timelineVariable('Statement') + "</font></b>",
+    choices: ['z','m'],
+    data: {
+      category: jsPsych.timelineVariable('Category'),
+      correct_response: jsPsych.timelineVariable('T2'),
+      naive_theory: jsPsych.timelineVariable('T1'),
+    },
+    on_finish: function(data){
+      data.is_consistent = data.naive_theory === data.correct_response;
+      if(data.response === "z"){
+        data.response_tf = "T";
+      } else if(data.response === "m"){
+        data.response_tf = "F";
+      }
+      data.correct = data.response_tf === data.correct_response;
+    }
+  };
 
-    // introduce the category
-      var before_category = {
-        type: jsPsychHtmlKeyboardResponse,
-        stimulus: function() {
-          return "<p>Next, you will see statements about <b>" + category + "</b>. Press any key to continue.</p>";
-        }
+  // create category blocks with all of the statements 
+  for (var i = 0; i < categories.length; i++){
+    var category = categories[i];
+
+    // intro screen
+    var before_category = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: function() {
+        return "<p>Next, you will see statements about <b>" + category + "</b>. Press any key to continue.</p>";
+      }
     } 
     timeline.push(before_category);
 
-    //let's store one of these elements
-    stimulus_item = shuffled_scientific_statements[0];
+    // filter stimuli for this category (had help from TA)
+    var category_stimuli = scientific_statements.filter(function(item){
+      return item.Category === category;
+    });
 
-    // iterate through trials
-     console.log(stimulus_item);
-    for (var i = 0; i < shuffled_scientific_statements.length; i++) {
-      var stimulus_item = shuffled_scientific_statements[i];
-      var trial = {
-            type: jsPsychHtmlKeyboardResponse,
-            prompt: "<p>Press <b>z</b> if the statement is true, <b>m</b> if the statement is false.<\p>",
-            choices: ["z", "m"],
-            // store elements from the stimulus item
-            data: { 
-              category: stimulus_item['Category'],
-              correct_response: stimulus_item['T2'],
-              naive_theory: stimulus_item['T1'],
-              is_consistent: stimulus_item['T1'] == stimulus_item['T2']
-            },
-            // format the statement a bit using html
-            stimulus: "<b><font size=6>"+stimulus_item['Statement']+"</font></b>",
-            on_finish: function(data){
-              if (data.response === "z") {
-                data.response_tf = "T";
-              } else if (data.response === "m") {
-                data.response_tf = "F";
-              }
+    // category procedure - randomizes the order of the statements within the category
+    var category_procedure = {
+      timeline: [statement_trial],
+      timeline_variables: category_stimuli,
+      randomize_order: true
+    };
+    timeline.push(category_procedure);
+}
 
-              // store the accuracy
-              data.correct = data.response_tf === data.correct_response;
-            }
-          }
 
-          //push trial to timeline
-          timeline.push(trial);
 
-        category_statements = [];
-    }
-  }
+  // // categories for randomization
+  // var categories = scientific_statements.map(function(item) {
+  //   return item.Category;
+  // });
+  // console.log(categories);
+
+  // // randomize the order of the categories/domains
+  // categories = jsPsych.randomization.shuffle(categories);
+  // console.log(categories);
+
+  // var shuffled_scientific_statements = [];
+  // // randomizing the statements within each category/domain
+  // for (j = 0; j < categories.length; j++) {
+  //   var category = categories[j];
+  //   var category_statements = scientific_statements.filter(function(item) {
+  //     return item.Category == category;
+  //   });
+  //   category_statements = jsPsych.randomization.shuffle(category_statements);
+  //   shuffled_scientific_statements = shuffled_scientific_statements.concat(category_statements);
+
+  //   // introduce the category
+  //   var before_category = {
+  //     type: jsPsychHtmlKeyboardResponse,
+  //     stimulus: function() {
+  //       return "<p>Next, you will see statements about <b>" + category + "</b>. Press any key to continue.</p>";
+  //     }
+  //   } 
+  //   timeline.push(before_category);
+
+  //   //let's store one of these elements
+  //   stimulus_item = shuffled_scientific_statements[0];
+  //   console.log(stimulus_item);
+
+  //   // iterate through trials
+  //   for (var i = 0; i < 3; i++) {// shuffled_scientific_statements.length; i++) {
+  //     stimulus_item = shuffled_scientific_statements[i];
+  //     var trial = {
+  //           type: jsPsychHtmlKeyboardResponse,
+  //           prompt: "<p>Press <b>z</b> if the statement is true, <b>m</b> if the statement is false.<\p>",
+  //           choices: ["z", "m"],
+  //           // store elements from the stimulus item
+  //           data: { 
+  //             category: stimulus_item['Category'],
+  //             correct_response: stimulus_item['T2'],
+  //             naive_theory: stimulus_item['T1'],
+  //             is_consistent: stimulus_item['T1'] == stimulus_item['T2']
+  //           },
+  //           // format the statement a bit using html
+  //           stimulus: "<b><font size=6>"+stimulus_item['Statement']+"</font></b>",
+  //           on_finish: function(data){
+  //             if (data.response === "z") {
+  //               data.response_tf = "T";
+  //             } else if (data.response === "m") {
+  //               data.response_tf = "F";
+  //             }
+  //             // store the accuracy
+  //             data.correct = data.response_tf === data.correct_response;
+  //           }
+  //         }
+
+  //         //push trial to timeline
+  //         timeline.push(trial);
+
+  //       category_statements = [];
+  //       shuffled_scientific_statements = [];
+  //   }
+  // }
 
   // closing of the experiment
-    var end_experiment = {
-        type: jsPsychHtmlKeyboardResponse,
-        stimulus: `
-        <p>Thank you for completing this portion of the 
-        experiment. We now have a few  questions for you.</p>
-        <p>Press any key to proceed, and click submit once you are 
-        done with the questions! Thanks!! </p>
-        `};
+  var end_experiment = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `
+      <p>Thank you for completing this portion of the 
+      experiment. We now have a few  questions for you.</p>
+      <p>Press any key to proceed, and click submit once you are 
+      done with the questions! Thanks!! </p>
+      `};
+  timeline.push(end_experiment);
 
-    // demographic questions
-    var demographics = {
-        type: jsPsychSurvey,
-        survey_json:{
-            showQuestionNumbers: false,
-            elements: [
-                {type: 'text',
-                title: "What is your age? Please input a number.",
-                name: 'age'
-                },
-                {type: 'multi-choice',
-                title: "What is your grade level?",
-                name: 'grade',
-                options: ['1st Year', '2nd Year', '3rd Year', '4th Year', '5th Year', 'Other']
-                },
-                {type: 'multi-choice',
-                title: "What is your gender?",
-                name: 'gender',
-                options: ['Male', 'Female', 'Non-binary', 'Prefer not to say', 'Other']
-                },
-                {type: 'text',
-                title: "What is your major?",
-                name: 'major'
-                },
-                {type: 'text',
-                title: "What do you think this experiment was about?",
-                name: 'experiment_topic'
-                },
-                {type: 'text',
-                title: "Did you experience any technical difficulties in this experiment?",
-                name: 'technical_difficulties'
-                }
-            ]
-        }
-    };
+  // demographic questions
+  var demographics = {
+      type: jsPsychSurvey,
+      survey_json:{
+          showQuestionNumbers: false,
+          elements: [
+              {type: 'text',
+              title: "What is your age? Please input a number.",
+              name: 'age'
+              },
+              {type: 'multi-choice',
+              title: "What is your grade level?",
+              name: 'grade',
+              options: ['1st Year', '2nd Year', '3rd Year', '4th Year', '5th Year', 'Other']
+              },
+              {type: 'multi-choice',
+              title: "What is your gender?",
+              name: 'gender',
+              options: ['Male', 'Female', 'Non-binary', 'Prefer not to say', 'Other']
+              },
+              {type: 'text',
+              title: "What is your major?",
+              name: 'major'
+              },
+              {type: 'text',
+              title: "What do you think this experiment was about?",
+              name: 'experiment_topic'
+              },
+              {type: 'text',
+              title: "Did you experience any technical difficulties in this experiment?",
+              name: 'technical_difficulties'
+              }
+          ]
+      }
+  };
+  timeline.push(demographics);
 
-    timeline.push(end_experiment);
-    timeline.push(demographics);
+  // debrief of the experiment
+  var debrief = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `
+      <p> And that is the end of our experiment! Thanks for participating. Our study investigates 
+        whether some of the intuitive _____ people hold...</p>
+      `};
 
-// debrief of the experiment
-    var debrief = {
-        type: jsPsychHtmlKeyboardResponse,
-        stimulus: `
-        <p> And that is the end of our experiment! Thanks for participating. Our study investigates 
-          whether some of the intuitive _____ people hold...</p>
-        `};
-
-    timeline.push(debrief);
+  timeline.push(debrief);
 
   /* start the experiment */
   jsPsych.run(timeline);
