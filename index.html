@@ -69,13 +69,19 @@
   var statement_trial = {
     type: jsPsychHtmlKeyboardResponse,
     prompt: "<p>Press <b>z</b> if true and <b>m</b> if false.</p>",
-    stimulus: "<b><font size=6>" + jsPsych.timelineVariable('Statement') + "</font></b>",
+
+    stimulus: function (){
+      return `<b><span style="font-size: 40 px;">${jsPsych.timelineVariable('Statement')}</span></b>`;
+    },
+
     choices: ['z','m'],
+
     data: {
       category: jsPsych.timelineVariable('Category'),
       correct_response: jsPsych.timelineVariable('T2'),
       naive_theory: jsPsych.timelineVariable('T1'),
     },
+    
     on_finish: function(data){
       data.is_consistent = data.naive_theory === data.correct_response;
       if(data.response === "z"){
@@ -88,22 +94,18 @@
   };
 
   // create category blocks with all of the statements 
-  for (var i = 0; i < categories.length; i++){
-    var category = categories[i];
+  for (let i = 0; i < categories.length; i++){
+    let category = categories[i];
 
     // intro screen
-    var before_category = {
+    let before_category = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: function() {
-        return "<p>Next, you will see statements about <b>" + category + "</b>. Press any key to continue.</p>";
-      }
-    } 
+      stimulus: `<p>Next, you will see statements about <b>${category}</b>. Press any key to continue.</p>`
+      };
     timeline.push(before_category);
 
     // filter stimuli for this category (had help from TA)
-    var category_stimuli = scientific_statements.filter(function(item){
-      return item.Category === category;
-    });
+    let category_stimuli = scientific_statements.filter(item => item.Category === category);
 
     // category procedure - randomizes the order of the statements within the category
     var category_procedure = {
@@ -112,7 +114,7 @@
       randomize_order: true
     };
     timeline.push(category_procedure);
-}
+  }
 
 
 
