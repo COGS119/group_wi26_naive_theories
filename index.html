@@ -16,12 +16,12 @@
 <body></body>
 <script>
 
-  // initialize jsPsych 
-  var jsPsych = initJsPsych({
-    on_finish: function() {
-      jsPsych.data.displayData();
-    }
-  });
+// initialize jsPsych 
+var jsPsych = initJsPsych({ 
+  on_finish: function() { 
+    jsPsych.data.displayData(); 
+  } 
+});
 
   // create timeline
   var timeline = [];
@@ -70,18 +70,18 @@
     type: jsPsychHtmlKeyboardResponse,
     prompt: "<p>Press <b>z</b> if true and <b>m</b> if false.</p>",
 
-    stimulus: function (){
-      return `<b><span style="font-size: 40 px;">${jsPsych.timelineVariable('Statement')}</span></b>`;
-    },
+   stimulus: "<b><font size=6>" + jsPsych.timelineVariable('Statement') + "</font></b>",
 
     choices: ['z','m'],
 
-    data: {
-      category: jsPsych.timelineVariable('Category'),
-      correct_response: jsPsych.timelineVariable('T2'),
-      naive_theory: jsPsych.timelineVariable('T1'),
-    },
-    
+    data: function (){
+      return{
+      category: jsPsych.timelineVariable('Category', true),
+      correct_response: jsPsych.timelineVariable('T2', true),
+      naive_theory: jsPsych.timelineVariable('T1', true),
+    };
+  },
+
     on_finish: function(data){
       data.is_consistent = data.naive_theory === data.correct_response;
       if(data.response === "z"){
@@ -94,28 +94,17 @@
   };
 
   // create category blocks with all of the statements 
-  for (let i = 0; i < categories.length; i++){
-    let category = categories[i];
+  for (var i = 0; i < categories.length; i++){
+  var category = categories[i];
 
-    // intro screen
-    let before_category = {
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Next, you will see statements about <b>${category}</b>. Press any key to continue.</p>`
-      };
-    timeline.push(before_category);
-
-    // filter stimuli for this category (had help from TA)
-    let category_stimuli = scientific_statements.filter(item => item.Category === category);
-
-    // category procedure - randomizes the order of the statements within the category
-    var category_procedure = {
-      timeline: [statement_trial],
-      timeline_variables: category_stimuli,
-      randomize_order: true
-    };
-    timeline.push(category_procedure);
+  var before_category = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: function() {
+      return "<p>Next, you will see statements about <b>" + category + "</b>...</p>";
+    }
   }
-
+  timeline.push(before_category);
+}
 
 
   // // categories for randomization
@@ -243,6 +232,7 @@
       `};
 
   timeline.push(debrief);
+
 
   /* start the experiment */
   jsPsych.run(timeline);
