@@ -71,7 +71,7 @@ var jsPsych = initJsPsych({
     prompt: "<p>Press <b>Z</b> if true and <b>M</b> if false.</p>",
 
    stimulus: function (){
-   "<b><font size=6>" + jsPsych.timelineVariable('Statement') + "</font></b>"
+   return "<b><font size=6>" + jsPsych.timelineVariable('Statement') + "</font></b>"
    },
     choices: ['z','m'],
 
