@@ -60,10 +60,32 @@ var jsPsych = initJsPsych({
   };
   timeline.push(pariticipant_id_entry);
 
-  // randomizing the categories - used ChatGPT to help because didn't know how to pull the unique trials, and wanted it to be flexible for attention checks
+  // get unique categories
   var categories = [...new Set(scientific_statements.map(x => x.Category))];
   categories = jsPsych.randomization.shuffle(categories);
-  console.log(categories);
+  
+  categories.forEach(function(category){
+  
+    // category intro
+    timeline.push({
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: "<p>Next, you will see statements about <b>" + category + "</b>. Press any key to continue.</p>"
+    });
+  
+    // filter statements for this category
+    var category_statements = scientific_statements.filter(
+      x => x.Category === category
+    );
+  
+    category_statements = jsPsych.randomization.shuffle(category_statements);
+  
+    // push trials
+    timeline.push({
+      timeline: [statement_trial],
+      timeline_variables: category_statements
+    });
+  
+  });
 
   // core trials with statements
   var statement_trial = {
@@ -233,6 +255,7 @@ var jsPsych = initJsPsych({
 
   timeline.push(debrief);
 
+  console.log(timeline);
 
   /* start the experiment */
   jsPsych.run(timeline);
