@@ -68,10 +68,10 @@ var jsPsych = initJsPsych({
   // core trials with statements
   var statement_trial = {
     type: jsPsychHtmlKeyboardResponse,
-    prompt: "<p>Press <b>z</b> if true and <b>m</b> if false.</p>",
+    prompt: "<p>Press <b>Z</b> if true and <b>M</b> if false.</p>",
 
    stimulus: function (){
-"<b><font size=6>" + jsPsych.timelineVariable('Statement') + "</font></b>"
+   "<b><font size=6>" + jsPsych.timelineVariable('Statement') + "</font></b>"
    },
     choices: ['z','m'],
 
@@ -94,7 +94,7 @@ var jsPsych = initJsPsych({
     }
   };
 
-    // create category blocks with all of the statements 
+  // create category blocks with all of the statements 
   for (var i = 0; i < categories.length; i++){
   let category = categories[i];
 
