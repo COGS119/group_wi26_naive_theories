@@ -108,72 +108,72 @@ var jsPsych = initJsPsych({
 
 
   // // categories for randomization
-  // var categories = scientific_statements.map(function(item) {
-  //   return item.Category;
-  // });
-  // console.log(categories);
+  var categories = scientific_statements.map(function(item) {
+     return item.Category;
+   });
+  console.log(categories);
 
-  // // randomize the order of the categories/domains
-  // categories = jsPsych.randomization.shuffle(categories);
-  // console.log(categories);
+  // randomize the order of the categories/domains
+  categories = jsPsych.randomization.shuffle(categories);
+  console.log(categories);
 
-  // var shuffled_scientific_statements = [];
-  // // randomizing the statements within each category/domain
-  // for (j = 0; j < categories.length; j++) {
-  //   var category = categories[j];
-  //   var category_statements = scientific_statements.filter(function(item) {
-  //     return item.Category == category;
-  //   });
-  //   category_statements = jsPsych.randomization.shuffle(category_statements);
-  //   shuffled_scientific_statements = shuffled_scientific_statements.concat(category_statements);
+  var shuffled_scientific_statements = [];
+  // randomizing the statements within each category/domain
+  for (j = 0; j < categories.length; j++) {
+     var category = categories[j];
+     var category_statements = scientific_statements.filter(function(item) {
+       return item.Category == category;
+     });
+     category_statements = jsPsych.randomization.shuffle(category_statements);
+     shuffled_scientific_statements = shuffled_scientific_statements.concat(category_statements);
 
-  //   // introduce the category
-  //   var before_category = {
-  //     type: jsPsychHtmlKeyboardResponse,
-  //     stimulus: function() {
-  //       return "<p>Next, you will see statements about <b>" + category + "</b>. Press any key to continue.</p>";
-  //     }
-  //   } 
-  //   timeline.push(before_category);
+     // introduce the category
+     var before_category = {
+       type: jsPsychHtmlKeyboardResponse,
+       stimulus: function() {
+         return "<p>Next, you will see statements about <b>" + category + "</b>. Press any key to continue.</p>";
+       }
+     } 
+     timeline.push(before_category);
 
-  //   //let's store one of these elements
-  //   stimulus_item = shuffled_scientific_statements[0];
-  //   console.log(stimulus_item);
+     //let's store one of these elements
+     stimulus_item = shuffled_scientific_statements[0];
+     console.log(stimulus_item);
 
   //   // iterate through trials
-  //   for (var i = 0; i < 3; i++) {// shuffled_scientific_statements.length; i++) {
-  //     stimulus_item = shuffled_scientific_statements[i];
-  //     var trial = {
-  //           type: jsPsychHtmlKeyboardResponse,
-  //           prompt: "<p>Press <b>z</b> if the statement is true, <b>m</b> if the statement is false.<\p>",
-  //           choices: ["z", "m"],
-  //           // store elements from the stimulus item
-  //           data: { 
-  //             category: stimulus_item['Category'],
-  //             correct_response: stimulus_item['T2'],
-  //             naive_theory: stimulus_item['T1'],
-  //             is_consistent: stimulus_item['T1'] == stimulus_item['T2']
-  //           },
-  //           // format the statement a bit using html
-  //           stimulus: "<b><font size=6>"+stimulus_item['Statement']+"</font></b>",
-  //           on_finish: function(data){
-  //             if (data.response === "z") {
-  //               data.response_tf = "T";
-  //             } else if (data.response === "m") {
-  //               data.response_tf = "F";
-  //             }
-  //             // store the accuracy
-  //             data.correct = data.response_tf === data.correct_response;
-  //           }
-  //         }
+     for (var i = 0; i < 3; i++) {// shuffled_scientific_statements.length; i++) {
+       stimulus_item = shuffled_scientific_statements[i];
+       var trial = {
+             type: jsPsychHtmlKeyboardResponse,
+             prompt: "<p>Press <b>z</b> if the statement is true, <b>m</b> if the statement is false.<\p>",
+             choices: ["z", "m"],
+             // store elements from the stimulus item
+             data: { 
+               category: stimulus_item['Category'],
+               correct_response: stimulus_item['T2'],
+               naive_theory: stimulus_item['T1'],
+               is_consistent: stimulus_item['T1'] == stimulus_item['T2']
+             },
+             // format the statement a bit using html
+             stimulus: "<b><font size=6>"+stimulus_item['Statement']+"</font></b>",
+             on_finish: function(data){
+               if (data.response === "z") {
+                 data.response_tf = "T";
+               } else if (data.response === "m") {
+                 data.response_tf = "F";
+               }
+               // store the accuracy
+               data.correct = data.response_tf === data.correct_response;
+             }
+           }
 
-  //         //push trial to timeline
-  //         timeline.push(trial);
+           //push trial to timeline
+           timeline.push(trial);
 
-  //       category_statements = [];
-  //       shuffled_scientific_statements = [];
-  //   }
-  // }
+         category_statements = [];
+         shuffled_scientific_statements = [];
+     }
+   }
 
   // closing of the experiment
   var end_experiment = {
