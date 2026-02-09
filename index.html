@@ -47,7 +47,7 @@ var jsPsych = initJsPsych({
   timeline.push(welcome);
 
   // collecting participant ID
-  var pariticipant_id_entry = {
+  var participant_id_entry = {
     type: jsPsychSurveyText,
     questions: [
       { prompt: "Please enter your participant ID (e.g., p1):", name: "participant_id" } ],
@@ -58,7 +58,7 @@ var jsPsych = initJsPsych({
       });
     }
   };
-  timeline.push(pariticipant_id_entry);
+  timeline.push(participant_id_entry);
 
   // randomizing the categories - used ChatGPT to help because didn't know how to pull the unique trials, and wanted it to be flexible for attention checks
   var categories = [...new Set(scientific_statements.map(x => x.Category))];
@@ -70,15 +70,16 @@ var jsPsych = initJsPsych({
     type: jsPsychHtmlKeyboardResponse,
     prompt: "<p>Press <b>z</b> if true and <b>m</b> if false.</p>",
 
-   stimulus: "<b><font size=6>" + jsPsych.timelineVariable('Statement') + "</font></b>",
-
+   stimulus: function (){
+"<b><font size=6>" + jsPsych.timelineVariable('Statement') + "</font></b>"
+   },
     choices: ['z','m'],
 
     data: function (){
       return{
-      category: jsPsych.timelineVariable('Category', true),
-      correct_response: jsPsych.timelineVariable('T2', true),
-      naive_theory: jsPsych.timelineVariable('T1', true),
+      category: jsPsych.timelineVariable('Category'),
+      correct_response: jsPsych.timelineVariable('T2'),
+      naive_theory: jsPsych.timelineVariable('T1'),
     };
   },
 
@@ -93,25 +94,31 @@ var jsPsych = initJsPsych({
     }
   };
 
-  // create category blocks with all of the statements 
+    // create category blocks with all of the statements 
   for (var i = 0; i < categories.length; i++){
-  var category = categories[i];
+  let category = categories[i];
 
-  var before_category = {
+  // intro screen for the category
+  timeline.push({
     type: jsPsychHtmlKeyboardResponse,
-    stimulus: function() {
-      return "<p>Next, you will see statements about <b>" + category + "</b>...</p>";
-    }
-  }
-  timeline.push(before_category);
+    stimulus: "<p>Next, you will see statements about <b>" + category + "</b>...</p>",
+    choices: "ALL_KEYS"
+  });
+
+  // trials for that category
+  let category_statements = scientific_statements.filter(x => x.Category === category);
+
+  timeline.push({
+    timeline: [statement_trial],
+    timeline_variables: category_statements,
+    randomize_order: true
+  });
 }
-
-
   // // categories for randomization
   // var categories = scientific_statements.map(function(item) {
   //   return item.Category;
-  // });
-  // console.log(categories);
+   //});
+   //console.log(categories);
 
   // // randomize the order of the categories/domains
   // categories = jsPsych.randomization.shuffle(categories);
@@ -120,11 +127,11 @@ var jsPsych = initJsPsych({
   // var shuffled_scientific_statements = [];
   // // randomizing the statements within each category/domain
   // for (j = 0; j < categories.length; j++) {
-  //   var category = categories[j];
-  //   var category_statements = scientific_statements.filter(function(item) {
-  //     return item.Category == category;
-  //   });
-  //   category_statements = jsPsych.randomization.shuffle(category_statements);
+   //  var category = categories[j];
+   // var category_statements = scientific_statements.filter(function(item) {
+   //    return item.Category == category;
+   //  });
+   //  category_statements = jsPsych.randomization.shuffle(category_statements);
   //   shuffled_scientific_statements = shuffled_scientific_statements.concat(category_statements);
 
   //   // introduce the category
