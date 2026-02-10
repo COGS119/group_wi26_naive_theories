@@ -67,35 +67,34 @@ var jsPsych = initJsPsych({
   categories = jsPsych.randomization.shuffle(categories);
   console.log(categories);
 
+
   // core trials with statements
   var statement_trial = {
     type: jsPsychHtmlKeyboardResponse,
     prompt: "<p>Press <b>Z</b> if true and <b>M</b> if false.</p>",
 
-   stimulus: function (){
-   return "<b><font size=6>" + jsPsych.timelineVariable('Statement') + "</font></b>"
-   },
-    choices: ['z','m'],
+    stimulus: jsPsych.timelineVariable('Statement'),
+    choices: ['z','m']
 
-    data: function (){
-      return{
-      category: jsPsych.timelineVariable('Category'),
-      correct_response: jsPsych.timelineVariable('T2'),
-      naive_theory: jsPsych.timelineVariable('T1'),
+  //   data: function (){
+  //     return{
+  //     category: jsPsych.timelineVariable('Category'),
+  //     correct_response: jsPsych.timelineVariable('T2'),
+  //     naive_theory: jsPsych.timelineVariable('T1'),
+  //   };
+  // },
+
+  //   on_finish: function(data){
+  //     data.is_consistent = data.naive_theory === data.correct_response;
+  //     if(data.response === "z"){
+  //       data.response_tf = "T";
+  //     } else if(data.response === "m"){
+  //       data.response_tf = "F";
+  //     }
+  //     data.correct = data.response_tf === data.correct_response;
+  //   }
     };
-  },
-
-    on_finish: function(data){
-      data.is_consistent = data.naive_theory === data.correct_response;
-      if(data.response === "z"){
-        data.response_tf = "T";
-      } else if(data.response === "m"){
-        data.response_tf = "F";
-      }
-      data.correct = data.response_tf === data.correct_response;
-    }
-  };
-
+  
   // create category blocks with all of the statements 
   for (var i = 0; i < categories.length; i++){
   let category = categories[i];
@@ -108,14 +107,51 @@ var jsPsych = initJsPsych({
   });
 
   // trials for that category
-  let category_statements = scientific_statements.filter(x => x.Category === category);
+let category_statements = scientific_statements.filter(x => x.Category === category);
 
-  timeline.push({
+console.log(category_statements);
+console.log(typeof category_statements[0].Statement.toString());
+
+
+// //original
+//   timeline.push({
+//     timeline: [statement_trial],
+//     timeline_variables: category_statements,
+//     randomize_order: true
+//   });
+
+  // //trying something different 
+timeline.push({
     timeline: [statement_trial],
-    timeline_variables: category_statements,
+    timeline_variables: [
+      {'Statement' : category_statements[0].Statement},
+      {'Statement' : category_statements[1].Statement},
+      {'Statement' : category_statements[2].Statement},
+      {'Statement' : category_statements[3].Statement},
+      {'Statement' : category_statements[4].Statement},
+      {'Statement' : category_statements[5].Statement},
+      {'Statement' : category_statements[6].Statement},
+      {'Statement' : category_statements[7].Statement},
+      {'Statement' : category_statements[8].Statement},
+      {'Statement' : category_statements[9].Statement},
+      {'Statement' : category_statements[10].Statement},
+      {'Statement' : category_statements[11].Statement},
+      {'Statement' : category_statements[12].Statement},
+      {'Statement' : category_statements[13].Statement},
+      {'Statement' : category_statements[14].Statement},
+      {'Statement' : category_statements[15].Statement},
+      {'Statement' : category_statements[16].Statement},
+      {'Statement' : category_statements[17].Statement},
+      {'Statement' : category_statements[18].Statement},
+      {'Statement' : category_statements[19].Statement}
+    ],      
     randomize_order: true
   });
-}
+
+  } //closing the for loop
+
+
+
   // // categories for randomization
   // var categories = scientific_statements.map(function(item) {
   //   return item.Category;
