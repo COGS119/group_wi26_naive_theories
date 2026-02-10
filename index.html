@@ -5,6 +5,8 @@
   <title>Naive Theories</title>
   <script src="https://unpkg.com/jspsych@8.0.0"></script>
   <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.0.0"></script>
+  <script src="jspsych/plugin-survey.js"></script>
+  <link rel="stylesheet" href="jspsych/plugin-survey.css">
   <!-- load in the scientific statements js-->
   <script src="stimuli/shtulman_2012_scientific_statements.js"></script>
   <script src="https://unpkg.com/@jspsych/plugin-survey-text@2.0.0"></script>
@@ -199,19 +201,20 @@ var jsPsych = initJsPsych({
       survey_json:{
           showQuestionNumbers: false,
           elements: [
-              {type: 'text',
-              title: "What is your age? Please input a number.",
-              name: 'age'
-              },
-              {type: 'multi-choice',
+              {type: 'radiogroup',
               title: "What is your grade level?",
               name: 'grade',
-              options: ['1st Year', '2nd Year', '3rd Year', '4th Year', '5th Year', 'Other']
+              choices: ['1st Year', '2nd Year', '3rd Year', '4th Year', '5th Year', 'Other']
               },
-              {type: 'multi-choice',
+              {type: 'radiogroup',
               title: "What is your gender?",
               name: 'gender',
-              options: ['Male', 'Female', 'Non-binary', 'Prefer not to say', 'Other']
+              choices: ['Male', 'Female', 'Non-binary', 'Prefer not to say', 'Other']
+              },
+              {type: 'text',
+              title: "What is your age? Please input a number.",
+              name: 'age',
+              inputType: 'number'
               },
               {type: 'text',
               title: "What is your major?",
@@ -234,8 +237,9 @@ var jsPsych = initJsPsych({
   var debrief = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
-      <p> And that is the end of our experiment! Thanks for participating. Our study investigates 
-        whether some of the intuitive _____ people hold...</p>
+      <p> And that is the end of our experiment! Thanks for participating! We really appreciate it :)<br>
+      Our study is investigating whether some of the intuitive beliefs that people hold
+      remain or are replaced by learning the correct scientific concepts.</p>
       `};
 
   timeline.push(debrief);
