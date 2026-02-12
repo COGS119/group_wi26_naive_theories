@@ -7,6 +7,7 @@
   <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.0.0"></script>
   <script src="jspsych/plugin-survey.js"></script>
   <link rel="stylesheet" href="jspsych/plugin-survey.css">
+  <script src="https://unpkg.com/@jspsych/plugin-survey-multi-choice@1.1.3"></script>
   <!-- load in the scientific statements js-->
   <script src="stimuli/shtulman_2012_scientific_statements.js"></script>
   <script src="https://unpkg.com/@jspsych/plugin-survey-text@2.0.0"></script>
@@ -70,7 +71,7 @@
   // core trials with statements
   var statement_trial = {
     type: jsPsychHtmlKeyboardResponse,
-    prompt: "<p>Press <b>Z</b> if true and <b>M</b> if false.</p>",
+    prompt: "<p><br>Press <b>Z</b> if true and <b>M</b> if false.</br></p>",
     stimulus: function() {
       return '<div style="font-size:30pt;">' + jsPsych.evaluateTimelineVariable('Statement') + '</div>';
     }, // added here to make statement font size bigger than the reminder note about pressing Z or M
@@ -100,7 +101,7 @@
   };
     
   // create category blocks with all of the statements 
-  for (var i = 0; i < categories.length; i++){ // iterate through the domains (10)
+  for (var i = 9; i < categories.length; i++){ // iterate through the domains (10)
   let category = categories[i];
     // intro screen for the category (domain)
     var before_category = {
@@ -134,21 +135,29 @@
   timeline.push(end_experiment);
 
   // demographic questions
-  var demographics = {
+  var demographics1 = { 
+      type: jsPsychSurveyMultiChoice,
+        questions: [
+          {
+            prompt: "What is your grade level?", 
+            name: 'grade', 
+            options: ['1st Year', '2nd Year', '3rd Year', '4th Year', '5th Year', 'Other'],
+            required: true
+          }, 
+          {
+            prompt: "What is your gender identity?", 
+            name: 'gender', 
+            options: ['Male', 'Female', 'Non-binary', 'Prefer not to say', 'Other'], 
+            required: true
+          }
+        ],
+  };
+
+ var demographics2 = {
       type: jsPsychSurvey,
       survey_json:{
           showQuestionNumbers: false,
           elements: [
-              {type: 'radiogroup',
-              title: "What is your grade level?",
-              name: 'grade',
-              choices: ['1st Year', '2nd Year', '3rd Year', '4th Year', '5th Year', 'Other']
-              },
-              {type: 'radiogroup',
-              title: "What is your gender?",
-              name: 'gender',
-              choices: ['Male', 'Female', 'Non-binary', 'Prefer not to say', 'Other']
-              },
               {type: 'text',
               title: "What is your age? Please input a number.",
               name: 'age',
@@ -169,14 +178,16 @@
           ]
       }
   };
-  timeline.push(demographics);
+
+  timeline.push(demographics1, demographics2);
 
   // debrief of the experiment
   var debrief = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
-      <p> And that is the end of our experiment! Thanks for participating, we really appreciate it :)<br>
-      Our study investigates whether learning new science and math concepts replaces people's intuitive beliefs or if those beliefs continue to hold even after learning the correct scientific concepts.</p>
+      <p> And that is the end of our experiment! Thanks for participating, we really appreciate it :)<br> </p>
+      <p> Our study investigates whether learning new science and math concepts replaces people's </p>
+        <p>intuitive beliefs or if those beliefs continue to hold even after learning the correct scientific concepts.</p>
       `};
   timeline.push(debrief);
 
