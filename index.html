@@ -72,7 +72,9 @@ console.log(categories);
 var statement_trial = {
   type: jsPsychHtmlKeyboardResponse,
   prompt: "<p>Press <b>Z</b> if true and <b>M</b> if false.</p>",
-  stimulus: jsPsych.timelineVariable('Statement'),
+  stimulus: function() {
+    return '<div style="font-size:30pt;">' + jsPsych.evaluateTimelineVariable('Statement') + '</div>';
+  }, // added here to make statement font size bigger than the reminder note about pressing Z or M
   choices: ['z','m'],
   data: function (){
     return{
@@ -98,7 +100,7 @@ let category = categories[i];
   // intro screen for the category
   var before_category = {
     type: jsPsychHtmlKeyboardResponse,
-    stimulus: "<p>Next, you will see statements about <b>" + category + "</b>...</p>",
+    stimulus: "<p>Now you will see statements about <b>" + category + "</b>...</p>",
     choices: "ALL_KEYS"
   };
   timeline.push(before_category);
@@ -223,7 +225,7 @@ let category = categories[i];
       <p>Thank you for completing this portion of the 
       experiment. We now have a few  questions for you.</p>
       <p>Press any key to proceed, and click submit once you are 
-      done with the questions! Thanks!! </p>
+      done with the questions. Thanks! </p>
       `};
   timeline.push(end_experiment);
 
@@ -269,9 +271,8 @@ let category = categories[i];
   var debrief = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
-      <p> And that is the end of our experiment! Thanks for participating! We really appreciate it :)<br>
-      Our study is investigating whether some of the intuitive beliefs that people hold
-      remain or are replaced by learning the correct scientific concepts.</p>
+      <p> And that is the end of our experiment! Thanks for participating, we really appreciate it :)<br>
+      Our study investigates whether learning new science and math concepts replaces people's intuitive beliefs or if those beliefs continue to hold even after learning the correct scientific concepts.</p>
       `};
 
   timeline.push(debrief);
