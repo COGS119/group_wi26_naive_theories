@@ -14,6 +14,8 @@
   <script src="https://unpkg.com/@jspsych/plugin-fullscreen@1.2.1"></script>
   <script src="https://unpkg.com/@jspsych/plugin-survey@2.0.0"></script>
   <link href="https://unpkg.com/jspsych@8.0.0/css/jspsych.css" rel="stylesheet" type="text/css" />
+  <script src="https://unpkg.com/@jspsych/plugin-survey@4.0.0"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@jspsych/plugin-survey@4.0.0/css/survey.min.css">
 </head>
 
 <body></body>
@@ -75,7 +77,7 @@
     stimulus: function() {
       return '<div style="font-size:30pt;">' + jsPsych.evaluateTimelineVariable('Statement') + '</div>';
     }, // added here to make statement font size bigger than the reminder note about pressing Z or M
-    choices: ['z','m'],
+    choices: ['z','m','t'],
     // data we are recording per trial (domain/category, scientific theory answer, naive theory answer, concept tested, mean proportion answered correct, mean answering response time)
     data: function (){
       return{
@@ -93,6 +95,9 @@
       if(data.response === "z"){
         data.response_tf = "T";
       } else if(data.response === "m"){
+        data.response_tf = "F";
+      }
+       else if(data.response === "m"){
         data.response_tf = "F";
       }
       //compute accuracy
@@ -141,13 +146,14 @@
           {
             prompt: "What is your grade level?", 
             name: 'grade', 
-            options: ['1st Year', '2nd Year', '3rd Year', '4th Year', '5th Year', 'Other'],
+            options: ['1st Year', '2nd Year', '3rd Year', '4th Year', '5th+ Year'],
             required: true
           }, 
           {
             prompt: "What is your gender identity?", 
             name: 'gender', 
             options: ['Male', 'Female', 'Non-binary', 'Prefer not to say', 'Other'], 
+            showOtherItem: true,
             required: true
           }
         ],

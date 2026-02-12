@@ -18,6 +18,15 @@ var scientific_statements = [
   // },
   {
     "Category": "Astronomy",
+    "Concept": "AttentionCheck",
+    "T1": "T",
+    "T2": "T",
+    "Statement": "Press T if you are paying attention",
+    "M proportion correct": 0.83,
+    "M response time (ms)": 3943
+  },
+  {
+    "Category": "Astronomy",
     "Concept": "Planet",
     "T1": "T",
     "T2": "T",
@@ -195,6 +204,15 @@ var scientific_statements = [
     "Statement": "The earth's tilt causes the seasons.",
     "M proportion correct": 0.75,
     "M response time (ms)": 3590
+  },
+  {
+    "Category": "Evolution",
+    "Concept": "AttentionCheck",
+    "T1": "T",
+    "T2": "T",
+    "Statement": "Press T if you are paying attention",
+    "M proportion correct": 0.83,
+    "M response time (ms)": 3943
   },
   {
     "Category": "Evolution",
@@ -555,6 +573,15 @@ var scientific_statements = [
     "Statement": "There are numbers between 1/3 and 1/2.",
     "M proportion correct": 0.93,
     "M response time (ms)": 3731
+  },
+  {
+    "Category": "Genetics",
+    "Concept": "AttentionCheck",
+    "T1": "T",
+    "T2": "T",
+    "Statement": "Press T if you are paying attention",
+    "M proportion correct": 0.83,
+    "M response time (ms)": 3943
   },
   {
     "Category": "Genetics",
