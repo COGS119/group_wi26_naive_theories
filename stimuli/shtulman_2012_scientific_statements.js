@@ -19,8 +19,8 @@ var scientific_statements = [
   {
     "Category": "Astronomy",
     "Concept": "AttentionCheck",
-    "T1": "T",
-    "T2": "T",
+    "T1": "T3",
+    "T2": "T3",
     "Statement": "Press T if you are paying attention",
     "M proportion correct": 0.83,
     "M response time (ms)": 3943
@@ -208,8 +208,8 @@ var scientific_statements = [
   {
     "Category": "Evolution",
     "Concept": "AttentionCheck",
-    "T1": "T",
-    "T2": "T",
+    "T1": "T3",
+    "T2": "T3",
     "Statement": "Press T if you are paying attention",
     "M proportion correct": 0.83,
     "M response time (ms)": 3943
@@ -577,8 +577,8 @@ var scientific_statements = [
   {
     "Category": "Genetics",
     "Concept": "AttentionCheck",
-    "T1": "T",
-    "T2": "T",
+    "T1": "T3",
+    "T2": "T3",
     "Statement": "Press T if you are paying attention",
     "M proportion correct": 0.83,
     "M response time (ms)": 3943
