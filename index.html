@@ -18,205 +18,109 @@
 <body></body>
 <script>
 
-// initialize jsPsych 
-var jsPsych = initJsPsych({ 
-  on_finish: function() { 
-    jsPsych.data.displayData(); 
-  } 
-});
-
-// create timeline
-var timeline = [];
-
-// load in stimulus list 
-// IDEA: convert the csv to json format and store that item as a variable in .js code (loaded above)
-// each element in the variable scientific statements is one row in the csv, structured as an Object/ dictionary
-// you can view the structure by looking in the console
-console.log(scientific_statements);
-
-// full screen
-var fullscreen = {
-  type: jsPsychFullscreen,
-  fullscreen_mode: true
-};
-timeline.push(fullscreen);
-
-// welcome message trial
-var welcome = {
-  type: jsPsychHtmlKeyboardResponse,
-  stimulus: "<p>Welcome to the experiment.<br><br>You will see several statements about science and math.<br><br>Please read the statements and respond with whether you think they are <b>true (Z key)</b> or <b>false (M key)</b> as quickly as possible.<br><br>Press any key to begin.</p>"
-};
-timeline.push(welcome);
-
-// collecting participant ID
-var participant_id_entry = {
-  type: jsPsychSurveyText,
-  questions: [
-    { prompt: "Please enter your participant ID (e.g., p1):", name: "participant_id" } ],
-  on_finish: function(data){
-    console.log(data.response)
-    jsPsych.data.addProperties({
-      participant_id: data.response.participant_id
-    });
-  }
-};
-timeline.push(participant_id_entry);
-
-// randomizing the categories - used ChatGPT to help because didn't know how to pull the unique trials, and wanted it to be flexible for attention checks
-var categories = [...new Set(scientific_statements.map(x => x.Category))];
-categories = jsPsych.randomization.shuffle(categories);
-console.log(categories);
-
-
-// core trials with statements
-var statement_trial = {
-  type: jsPsychHtmlKeyboardResponse,
-  prompt: "<p>Press <b>Z</b> if true and <b>M</b> if false.</p>",
-  stimulus: function() {
-    return '<div style="font-size:30pt;">' + jsPsych.evaluateTimelineVariable('Statement') + '</div>';
-  }, // added here to make statement font size bigger than the reminder note about pressing Z or M
-  choices: ['z','m'],
-  data: function (){
-    return{
-    category: jsPsych.timelineVariable('Category'),
-    correct_response: jsPsych.timelineVariable('T2'),
-    naive_theory: jsPsych.timelineVariable('T1'),
-    };
-  },
-  on_finish: function(data){
-    data.is_consistent = data.naive_theory === data.correct_response;
-    if(data.response === "z"){
-      data.response_tf = "T";
-    } else if(data.response === "m"){
-      data.response_tf = "F";
-    }
-    data.correct = data.response_tf === data.correct_response;
-  }
-};
-  
-// create category blocks with all of the statements 
-for (var i = 0; i < categories.length; i++){
-let category = categories[i];
-  // intro screen for the category
-  var before_category = {
-    type: jsPsychHtmlKeyboardResponse,
-    stimulus: "<p>Now you will see statements about <b>" + category + "</b>...</p>",
-    choices: "ALL_KEYS"
-  };
-  timeline.push(before_category);
-
-  // trials for that category
-  let category_statements = scientific_statements.filter(x => x.Category === category);
-  console.log(category_statements);
-  console.log(typeof category_statements[0].Statement.toString());
-
-
-//original
-  timeline.push({
-    timeline: [statement_trial],
-    timeline_variables: category_statements,
-    randomize_order: true
+  // initialize jsPsych 
+  var jsPsych = initJsPsych({ 
+    on_finish: function() { 
+      jsPsych.data.displayData(); 
+    } 
   });
 
-  // // //trying something different 
-  // timeline.push({
-  //   timeline: [statement_trial],
-  //   timeline_variables: [
-  //     // {'Statement' : category_statements[0].Statement},
-  //     // {'Statement' : category_statements[1].Statement},
-  //     // {'Statement' : category_statements[2].Statement},
-  //     // {'Statement' : category_statements[3].Statement},
-  //     // {'Statement' : category_statements[4].Statement},
-  //     // {'Statement' : category_statements[5].Statement},
-  //     // {'Statement' : category_statements[6].Statement},
-  //     // {'Statement' : category_statements[7].Statement},
-  //     // {'Statement' : category_statements[8].Statement},
-  //     // {'Statement' : category_statements[9].Statement},
-  //     // {'Statement' : category_statements[10].Statement},
-  //     // {'Statement' : category_statements[11].Statement},
-  //     // {'Statement' : category_statements[12].Statement},
-  //     // {'Statement' : category_statements[13].Statement},
-  //     // {'Statement' : category_statements[14].Statement},
-  //     // {'Statement' : category_statements[15].Statement},
-  //     // {'Statement' : category_statements[16].Statement},
-  //     // {'Statement' : category_statements[17].Statement},
-  //     // {'Statement' : category_statements[18].Statement},
-  //     {'Statement' : category_statements[19].Statement}
-  //   ],      
-  //   randomize_order: true
-  // });
+  // create timeline
+  var timeline = [];
 
-} //closing the for loop
+  // load in stimulus list 
+  // IDEA: convert the csv to json format and store that item as a variable in .js code (loaded above)
+  // each element in the variable scientific statements is one row in the csv, structured as an Object/ dictionary
+  // you can view the structure by looking in the console
+  console.log(scientific_statements);
+
+  // full screen
+  var fullscreen = {
+    type: jsPsychFullscreen,
+    fullscreen_mode: true
+  };
+  timeline.push(fullscreen);
+
+  // welcome message trial
+  var welcome = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: "<p>Welcome to the experiment.<br><br>You will see several statements about science and math.<br><br>Please read the statements and respond with whether you think they are <b>true (Z key)</b> or <b>false (M key)</b> as quickly as possible.<br><br>Press any key to begin.</p>"
+  };
+  timeline.push(welcome);
+
+  // collecting participant ID
+  var participant_id_entry = {
+    type: jsPsychSurveyText,
+    questions: [
+      { prompt: "Please enter your participant ID (e.g., p1):", name: "participant_id" } ],
+    on_finish: function(data){
+      console.log(data.response)
+      jsPsych.data.addProperties({
+        participant_id: data.response.participant_id
+      });
+    }
+  };
+  timeline.push(participant_id_entry);
+
+  // randomizing the categories - used ChatGPT to help because didn't know how to pull the unique trials, and wanted it to be flexible for attention checks
+  var categories = [...new Set(scientific_statements.map(x => x.Category))];
+  categories = jsPsych.randomization.shuffle(categories);
+  console.log(categories);
 
 
+  // core trials with statements
+  var statement_trial = {
+    type: jsPsychHtmlKeyboardResponse,
+    prompt: "<p>Press <b>Z</b> if true and <b>M</b> if false.</p>",
+    stimulus: function() {
+      return '<div style="font-size:30pt;">' + jsPsych.evaluateTimelineVariable('Statement') + '</div>';
+    }, // added here to make statement font size bigger than the reminder note about pressing Z or M
+    choices: ['z','m'],
+    data: function (){
+      return{
+      category: jsPsych.timelineVariable('Category'),
+      correct_response: jsPsych.timelineVariable('T2'),
+      naive_theory: jsPsych.timelineVariable('T1'),
+      concept: jsPsych.timelineVariable('Concept'),
+      m_prop_correct: jsPsych.timelineVariable('M proportion correct'),
+      m_rt: jsPsych.timelineVariable('M response time (ms)'),
+      };
+    },
+    on_finish: function(data){
+      data.is_consistent = data.naive_theory === data.correct_response; // are the naive theory and correct response consistent with each other?
+      if(data.response === "z"){
+        data.response_tf = "T";
+      } else if(data.response === "m"){
+        data.response_tf = "F";
+      }
+      data.correct = data.response_tf === data.correct_response;
+    }
+  };
+    
+  // create category blocks with all of the statements 
+  for (var i = 0; i < categories.length; i++){ // iterate through the domains (10)
+  let category = categories[i];
+    // intro screen for the category
+    var before_category = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: "<p>Now you will see statements about <b>" + category + "</b>...</p>",
+      choices: "ALL_KEYS"
+    };
+    timeline.push(before_category);
 
-  // // categories for randomization
-  // var categories = scientific_statements.map(function(item) {
-  //   return item.Category;
-   //});
-   //console.log(categories);
+    // statements for that category (total of 20)
+    let category_statements = scientific_statements.filter(x => x.Category === category);
+    console.log(category_statements);
+    console.log(typeof category_statements[0].Statement.toString());
 
-  // // randomize the order of the categories/domains
-  // categories = jsPsych.randomization.shuffle(categories);
-  // console.log(categories);
+    //push the trials for that category to the timeline, randomizing the order of the statements within the category
+    timeline.push({
+      timeline: [statement_trial],
+      timeline_variables: category_statements,
+      randomize_order: true
+    });
+  } //closing the for loop
 
-  // var shuffled_scientific_statements = [];
-  // // randomizing the statements within each category/domain
-  // for (j = 0; j < categories.length; j++) {
-   //  var category = categories[j];
-   // var category_statements = scientific_statements.filter(function(item) {
-   //    return item.Category == category;
-   //  });
-   //  category_statements = jsPsych.randomization.shuffle(category_statements);
-  //   shuffled_scientific_statements = shuffled_scientific_statements.concat(category_statements);
-
-  //   // introduce the category
-  //   var before_category = {
-  //     type: jsPsychHtmlKeyboardResponse,
-  //     stimulus: function() {
-  //       return "<p>Next, you will see statements about <b>" + category + "</b>. Press any key to continue.</p>";
-  //     }
-  //   } 
-  //   timeline.push(before_category);
-
-  //   //let's store one of these elements
-  //   stimulus_item = shuffled_scientific_statements[0];
-  //   console.log(stimulus_item);
-
-  //   // iterate through trials
-  //   for (var i = 0; i < 3; i++) {// shuffled_scientific_statements.length; i++) {
-  //     stimulus_item = shuffled_scientific_statements[i];
-  //     var trial = {
-  //           type: jsPsychHtmlKeyboardResponse,
-  //           prompt: "<p>Press <b>z</b> if the statement is true, <b>m</b> if the statement is false.<\p>",
-  //           choices: ["z", "m"],
-  //           // store elements from the stimulus item
-  //           data: { 
-  //             category: stimulus_item['Category'],
-  //             correct_response: stimulus_item['T2'],
-  //             naive_theory: stimulus_item['T1'],
-  //             is_consistent: stimulus_item['T1'] == stimulus_item['T2']
-  //           },
-  //           // format the statement a bit using html
-  //           stimulus: "<b><font size=6>"+stimulus_item['Statement']+"</font></b>",
-  //           on_finish: function(data){
-  //             if (data.response === "z") {
-  //               data.response_tf = "T";
-  //             } else if (data.response === "m") {
-  //               data.response_tf = "F";
-  //             }
-  //             // store the accuracy
-  //             data.correct = data.response_tf === data.correct_response;
-  //           }
-  //         }
-
-  //         //push trial to timeline
-  //         timeline.push(trial);
-
-  //       category_statements = [];
-  //       shuffled_scientific_statements = [];
-  //   }
-  // }
 
   // closing of the experiment
   var end_experiment = {
@@ -274,15 +178,10 @@ let category = categories[i];
       <p> And that is the end of our experiment! Thanks for participating, we really appreciate it :)<br>
       Our study investigates whether learning new science and math concepts replaces people's intuitive beliefs or if those beliefs continue to hold even after learning the correct scientific concepts.</p>
       `};
-
   timeline.push(debrief);
-
 
   /* start the experiment */
   jsPsych.run(timeline);
-
-
-
 </script>
 
 </html>
