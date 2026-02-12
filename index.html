@@ -32,7 +32,6 @@
   // IDEA: convert the csv to json format and store that item as a variable in .js code (loaded above)
   // each element in the variable scientific statements is one row in the csv, structured as an Object/ dictionary
   // you can view the structure by looking in the console
-  console.log(scientific_statements);
 
   // full screen
   var fullscreen = {
@@ -62,10 +61,10 @@
   };
   timeline.push(participant_id_entry);
 
-  // randomizing the categories - used ChatGPT to help because didn't know how to pull the unique trials, and wanted it to be flexible for attention checks
+  // get a list of unique category names from scientific_statements array
   var categories = [...new Set(scientific_statements.map(x => x.Category))];
+  // randomize categories (domains) shown to participants
   categories = jsPsych.randomization.shuffle(categories);
-  console.log(categories);
 
 
   // core trials with statements
@@ -76,6 +75,7 @@
       return '<div style="font-size:30pt;">' + jsPsych.evaluateTimelineVariable('Statement') + '</div>';
     }, // added here to make statement font size bigger than the reminder note about pressing Z or M
     choices: ['z','m'],
+    // data we are recording per trial (domain/category, scientific theory answer, naive theory answer, concept tested, mean proportion answered correct, mean answering response time)
     data: function (){
       return{
       category: jsPsych.timelineVariable('Category'),
@@ -87,12 +87,14 @@
       };
     },
     on_finish: function(data){
-      data.is_consistent = data.naive_theory === data.correct_response; // are the naive theory and correct response consistent with each other?
+      data.is_consistent = data.naive_theory === data.correct_response; // mark whether the scientific theory "consistent" with naive theory
+      // convert the raw key press ("Z" or "M") into "T" or "F"
       if(data.response === "z"){
         data.response_tf = "T";
       } else if(data.response === "m"){
         data.response_tf = "F";
       }
+      //compute accuracy
       data.correct = data.response_tf === data.correct_response;
     }
   };
@@ -100,7 +102,7 @@
   // create category blocks with all of the statements 
   for (var i = 0; i < categories.length; i++){ // iterate through the domains (10)
   let category = categories[i];
-    // intro screen for the category
+    // intro screen for the category (domain)
     var before_category = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: "<p>Now you will see statements about <b>" + category + "</b>...</p>",
@@ -108,10 +110,8 @@
     };
     timeline.push(before_category);
 
-    // statements for that category (total of 20)
+    // statements for that category (total of 20), makes new array (category_statements) containing only statements from that specific category/domain
     let category_statements = scientific_statements.filter(x => x.Category === category);
-    console.log(category_statements);
-    console.log(typeof category_statements[0].Statement.toString());
 
     //push the trials for that category to the timeline, randomizing the order of the statements within the category
     timeline.push({
@@ -122,7 +122,7 @@
   } //closing the for loop
 
 
-  // closing of the experiment
+  // closing of the experiment with closing message
   var end_experiment = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
