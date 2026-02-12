@@ -72,7 +72,7 @@
   // core trials with statements
   var statement_trial = {
     type: jsPsychHtmlKeyboardResponse,
-    prompt: "<p>Press <b>Z</b> if true and <b>M</b> if false.</p>",
+    prompt: "<p><br>Press <b>Z</b> if true and <b>M</b> if false.</br></p>",
     stimulus: function() {
       return '<div style="font-size:30pt;">' + jsPsych.evaluateTimelineVariable('Statement') + '</div>';
     }, // added here to make statement font size bigger than the reminder note about pressing Z or M
@@ -185,8 +185,9 @@
   var debrief = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
-      <p> And that is the end of our experiment! Thanks for participating, we really appreciate it :)<br>
-      Our study investigates whether learning new science and math concepts replaces people's intuitive beliefs or if those beliefs continue to hold even after learning the correct scientific concepts.</p>
+      <p> And that is the end of our experiment! Thanks for participating, we really appreciate it :)<br> </p>
+      <p> Our study investigates whether learning new science and math concepts replaces people's </p>
+        <p>intuitive beliefs or if those beliefs continue to hold even after learning the correct scientific concepts.</p>
       `};
   timeline.push(debrief);
 
