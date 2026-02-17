@@ -15,6 +15,8 @@
   <script src="https://unpkg.com/@jspsych/plugin-survey@2.0.0"></script>
   <link href="https://unpkg.com/jspsych@8.0.0/css/jspsych.css" rel="stylesheet" type="text/css" />
   <script src="https://unpkg.com/@jspsych/plugin-survey@4.0.0"></script>
+  <!-- This is for data storage - please be sure to keep this script in all future updates to the code!! -->
+  <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
   <link rel="stylesheet" href="https://unpkg.com/@jspsych/plugin-survey@4.0.0/css/survey.min.css">
 </head>
 
@@ -22,14 +24,27 @@
 <script>
 
   // initialize jsPsych 
-  var jsPsych = initJsPsych({ 
-    on_finish: function() { 
-      jsPsych.data.displayData(); 
-    } 
+  var jsPsych = initJsPsych({
+    on_finish: function () {
+      jsPsych.data.displayData();
+    }
   });
 
   // create timeline
   var timeline = [];
+
+  //PLEASE KEEP FOR ALL FUTURE ITERATIONS
+  //create a unique filename by combining a random string and a millisecond counter (to avoid duplicates)
+  var random_id = jsPsych.randomization.randomID(10);
+  const date = new Date();
+  random_id = "p" + random_id.toString();
+  var file_id = random_id + "_" + date.getTime().toString();
+  const filename = `${file_id}.csv`;
+  //also store the random id for convenience
+  jsPsych.data.addProperties({
+    random_id: random_id,
+  });
+  //PLEASE KEEP FOR ALL FUTURE ITERATIONS
 
   // load in stimulus list 
   // IDEA: convert the csv to json format and store that item as a variable in .js code (loaded above)
@@ -54,8 +69,8 @@
   var participant_id_entry = {
     type: jsPsychSurveyText,
     questions: [
-      { prompt: "Please enter your participant ID (e.g., p1):", name: "participant_id" } ],
-    on_finish: function(data){
+      { prompt: "Please enter your participant ID (e.g., p1):", name: "participant_id" }],
+    on_finish: function (data) {
       console.log(data.response)
       jsPsych.data.addProperties({
         participant_id: data.response.participant_id
@@ -74,40 +89,40 @@
   var statement_trial = {
     type: jsPsychHtmlKeyboardResponse,
     prompt: "<p><br>Press <b>Z</b> if true and <b>M</b> if false.</br></p>",
-    stimulus: function() {
+    stimulus: function () {
       return '<div style="font-size:30pt;">' + jsPsych.evaluateTimelineVariable('Statement') + '</div>';
     }, // added here to make statement font size bigger than the reminder note about pressing Z or M
-    choices: ['z','m','t'],
+    choices: ['z', 'm', 't'],
     // data we are recording per trial (domain/category, scientific theory answer, naive theory answer, concept tested, mean proportion answered correct, mean answering response time)
-    data: function (){
-      return{
-      category: jsPsych.timelineVariable('Category'),
-      correct_response: jsPsych.timelineVariable('T2'),
-      naive_theory: jsPsych.timelineVariable('T1'),
-      concept: jsPsych.timelineVariable('Concept'),
-      m_prop_correct: jsPsych.timelineVariable('M proportion correct'),
-      m_rt: jsPsych.timelineVariable('M response time (ms)'),
+    data: function () {
+      return {
+        category: jsPsych.timelineVariable('Category'),
+        correct_response: jsPsych.timelineVariable('T2'),
+        naive_theory: jsPsych.timelineVariable('T1'),
+        concept: jsPsych.timelineVariable('Concept'),
+        m_prop_correct: jsPsych.timelineVariable('M proportion correct'),
+        m_rt: jsPsych.timelineVariable('M response time (ms)'),
       };
     },
-    on_finish: function(data){
+    on_finish: function (data) {
       data.is_consistent = data.naive_theory === data.correct_response; // mark whether the scientific theory "consistent" with naive theory
       // convert the raw key press ("Z" or "M") into "T" or "F"
-      if(data.response === "z"){
+      if (data.response === "z") {
         data.response_tf = "T";
-      } else if(data.response === "m"){
+      } else if (data.response === "m") {
         data.response_tf = "F";
       }
-       else if(data.response === "t"){
+      else if (data.response === "t") {
         data.response_tf = "T3";
       }
       //compute accuracy
       data.correct = data.response_tf === data.correct_response;
     }
   };
-    
+
   // create category blocks with all of the statements 
-  for (var i = 0; i < categories.length; i++){ // iterate through the domains (10)
-  let category = categories[i];
+  for (var i = 0; i < categories.length; i++) { // iterate through the domains (10)
+    let category = categories[i];
     // intro screen for the category (domain)
     var before_category = {
       type: jsPsychHtmlKeyboardResponse,
@@ -130,8 +145,8 @@
 
   // closing of the experiment with closing message
   var end_experiment = {
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: `
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: `
       <p>Thank you for completing this portion of the 
       experiment. We now have a few  questions for you.</p>
       <p>Press any key to proceed, and click submit once you are 
@@ -140,57 +155,73 @@
   timeline.push(end_experiment);
 
   // demographic questions
-  var demographics1 = { 
-      type: jsPsychSurveyMultiChoice,
-        questions: [
-          {
-            prompt: "What is your grade level?", 
-            name: 'grade', 
-            options: ['1st Year', '2nd Year', '3rd Year', '4th Year', '5th+ Year'],
-            required: true
-          }, 
-          {
-            prompt: "What is your gender identity?", 
-            name: 'gender', 
-            options: ['Male', 'Female', 'Non-binary', 'Prefer not to say', 'Other'], 
-            showOtherItem: true,
-            required: true
-          }
-        ],
+  var demographics1 = {
+    type: jsPsychSurveyMultiChoice,
+    questions: [
+      {
+        prompt: "What is your grade level?",
+        name: 'grade',
+        options: ['1st Year', '2nd Year', '3rd Year', '4th Year', '5th+ Year'],
+        required: true
+      },
+      {
+        prompt: "What is your gender identity?",
+        name: 'gender',
+        options: ['Male', 'Female', 'Non-binary', 'Prefer not to say', 'Other'],
+        showOtherItem: true,
+        required: true
+      }
+    ],
   };
 
- var demographics2 = {
-      type: jsPsychSurvey,
-      survey_json:{
-          showQuestionNumbers: false,
-          elements: [
-              {type: 'text',
-              title: "What is your age? Please input a number.",
-              name: 'age',
-              inputType: 'number'
-              },
-              {type: 'text',
-              title: "What is your major?",
-              name: 'major'
-              },
-              {type: 'text',
-              title: "What do you think this experiment was about?",
-              name: 'experiment_topic'
-              },
-              {type: 'text',
-              title: "Did you experience any technical difficulties in this experiment?",
-              name: 'technical_difficulties'
-              }
-          ]
-      }
+  var demographics2 = {
+    type: jsPsychSurvey,
+    survey_json: {
+      showQuestionNumbers: false,
+      elements: [
+        {
+          type: 'text',
+          title: "What is your age? Please input a number.",
+          name: 'age',
+          inputType: 'number'
+        },
+        {
+          type: 'text',
+          title: "What is your major?",
+          name: 'major'
+        },
+        {
+          type: 'text',
+          title: "What do you think this experiment was about?",
+          name: 'experiment_topic'
+        },
+        {
+          type: 'text',
+          title: "Did you experience any technical difficulties in this experiment?",
+          name: 'technical_difficulties'
+        }
+      ]
+    }
   };
 
   timeline.push(demographics1, demographics2);
 
+  //PLEASE KEEP FOR ALL FUTURE ITERATIONS
+  //this portion of the code ensures that the data gets sent to be stored on OSF
+  const save_data = {
+    type: jsPsychPipe,
+    action: "save",
+    experiment_id: "vEzXQSknEHsr",
+    filename: filename,
+    data_string: () => jsPsych.data.get().csv()
+  };
+  timeline.push(save_data);
+  //PLEASE KEEP FOR ALL FUTURE ITERATIONS
+
   // debrief of the experiment
   var debrief = {
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: `
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: `
       <p> And that is the end of our experiment! Thanks for participating, we really appreciate it :)<br> </p>
       <p> Our study investigates whether learning new science and math concepts replaces people's </p>
         <p>intuitive beliefs or if those beliefs continue to hold even after learning the correct scientific concepts.</p>
