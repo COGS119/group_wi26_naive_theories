@@ -61,7 +61,7 @@
   // welcome message trial
   var welcome = {
     type: jsPsychHtmlKeyboardResponse,
-    stimulus: "<p>Welcome to the experiment.<br><br>You will see several statements about science and math.<br><br>Please read the statements and respond with whether you think they are <b>true (Z key)</b> or <b>false (M key)</b> as quickly as possible.<br><br>Press any key to begin.</p>"
+    stimulus: "<p>Welcome to the experiment.<br><br>You will see 200 statements about science and math.<br><br>Please read the statements and respond with whether you think they are <b>true (Z key)</b> or <b>false (M key)</b> as quickly as possible!<br><br>Press any key to begin.</p>"
   };
   timeline.push(welcome);
 
@@ -126,7 +126,7 @@
     // intro screen for the category (domain)
     var before_category = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: "<p>Now you will see statements about <b>" + category + "</b>. Press any key to continue.</p>",
+      stimulus: "<p>The next 20 statements will be about <b>" + category + "</b>. Press any key to continue.</p>",
       choices: "ALL_KEYS"
     };
     timeline.push(before_category);
