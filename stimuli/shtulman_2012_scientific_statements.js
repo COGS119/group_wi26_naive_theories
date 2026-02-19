@@ -1,29 +1,13 @@
 //array of scientific statements
 var scientific_statements = [
-  // {
-  //   "Category": "Attention_Check1",
-  //   "Statement": "Press 'b' if you are paying attention"
-  // },
-  // {
-  //   "Category": "Attention_Check2",
-  //   "Statement": "Press 'b' if you are paying attention"
-  // },
-  // {
-  //   "Category": "Attention_Check3",
-  //   "Statement": "Press 'b' if you are paying attention"
-  // },
-  // {
-  //   "Category": "Attention_Check4",
-  //   "Statement": "Press 'b' if you are paying attention"
-  // },
   {
     "Category": "Astronomy",
     "Concept": "AttentionCheck",
     "T1": "T3",
     "T2": "T3",
     "Statement": "Press T if you are paying attention",
-    "M proportion correct": 0.83,
-    "M response time (ms)": 3943
+    "M proportion correct": 0,
+    "M response time (ms)": 0
   },
   {
     "Category": "Astronomy",
@@ -211,8 +195,8 @@ var scientific_statements = [
     "T1": "T3",
     "T2": "T3",
     "Statement": "Press T if you are paying attention",
-    "M proportion correct": 0.83,
-    "M response time (ms)": 3943
+    "M proportion correct": 0,
+    "M response time (ms)": 0
   },
   {
     "Category": "Evolution",
@@ -393,6 +377,15 @@ var scientific_statements = [
     "Statement": "Computer viruses evolve.",
     "M proportion correct": 0.48,
     "M response time (ms)": 3250
+  },
+  {
+    "Category": "Fractions",
+    "Concept": "AttentionCheck",
+    "T1": "T3",
+    "T2": "T3",
+    "Statement": "Press T if you are paying attention",
+    "M proportion correct": 0,
+    "M response time (ms)": 0
   },
   {
     "Category": "Fractions",
@@ -580,8 +573,8 @@ var scientific_statements = [
     "T1": "T3",
     "T2": "T3",
     "Statement": "Press T if you are paying attention",
-    "M proportion correct": 0.83,
-    "M response time (ms)": 3943
+    "M proportion correct": 0,
+    "M response time (ms)": 0
   },
   {
     "Category": "Genetics",
@@ -765,6 +758,15 @@ var scientific_statements = [
   },
   {
     "Category": "Germs",
+    "Concept": "AttentionCheck",
+    "T1": "T3",
+    "T2": "T3",
+    "Statement": "Press T if you are paying attention",
+    "M proportion correct": 0,
+    "M response time (ms)": 0
+  },
+  {
+    "Category": "Germs",
     "Concept": "Contagion",
     "T1": "T",
     "T2": "T",
@@ -942,6 +944,15 @@ var scientific_statements = [
     "Statement": "Germs have DNA.",
     "M proportion correct": 0.71,
     "M response time (ms)": 2639
+  },
+  {
+    "Category": "Matter",
+    "Concept": "AttentionCheck",
+    "T1": "T3",
+    "T2": "T3",
+    "Statement": "Press T if you are paying attention",
+    "M proportion correct": 0,
+    "M response time (ms)": 0
   },
   {
     "Category": "Matter",
@@ -1125,6 +1136,15 @@ var scientific_statements = [
   },
   {
     "Category": "Mechanics",
+    "Concept": "AttentionCheck",
+    "T1": "T3",
+    "T2": "T3",
+    "Statement": "Press T if you are paying attention",
+    "M proportion correct": 0,
+    "M response time (ms)": 0
+  },
+  {
+    "Category": "Mechanics",
     "Concept": "Force",
     "T1": "T",
     "T2": "T",
@@ -1302,6 +1322,15 @@ var scientific_statements = [
     "Statement": "Pointy objects fall through air faster than flat objects.",
     "M proportion correct": 0.68,
     "M response time (ms)": 4955
+  },
+  {
+    "Category": "Physiology",
+    "Concept": "AttentionCheck",
+    "T1": "T3",
+    "T2": "T3",
+    "Statement": "Press T if you are paying attention",
+    "M proportion correct": 0,
+    "M response time (ms)": 0
   },
   {
     "Category": "Physiology",
@@ -1485,6 +1514,15 @@ var scientific_statements = [
   },
   {
     "Category": "Thermodynamics",
+    "Concept": "AttentionCheck",
+    "T1": "T3",
+    "T2": "T3",
+    "Statement": "Press T if you are paying attention",
+    "M proportion correct": 0,
+    "M response time (ms)": 0
+  },
+  {
+    "Category": "Thermodynamics",
     "Concept": "Heat",
     "T1": "T",
     "T2": "T",
@@ -1662,6 +1700,15 @@ var scientific_statements = [
     "Statement": "Heat increases an object's size.",
     "M proportion correct": 0.58,
     "M response time (ms)": 3965
+  },
+  {
+    "Category": "Waves",
+    "Concept": "AttentionCheck",
+    "T1": "T3",
+    "T2": "T3",
+    "Statement": "Press T if you are paying attention",
+    "M proportion correct": 0,
+    "M response time (ms)": 0
   },
   {
     "Category": "Waves",
