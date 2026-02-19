@@ -24,11 +24,7 @@
 <script>
 
   // initialize jsPsych 
-  var jsPsych = initJsPsych({
-    on_finish: function () {
-      jsPsych.data.displayData();
-    }
-  });
+  var jsPsych = initJsPsych();
 
   // create timeline
   var timeline = [];
@@ -58,18 +54,11 @@
   };
   timeline.push(fullscreen);
 
-  // welcome message trial
-  var welcome = {
-    type: jsPsychHtmlKeyboardResponse,
-    stimulus: "<p>Welcome to the experiment.<br><br>You will see 200 statements about science and math.<br><br>Please read the statements and respond with whether you think they are <b>true (Z key)</b> or <b>false (M key)</b> as quickly as possible!<br><br>Press any key to begin.</p>"
-  };
-  timeline.push(welcome);
-
-  // collecting participant ID
+   // collecting participant ID
   var participant_id_entry = {
     type: jsPsychSurveyText,
     questions: [
-      { prompt: "Please enter your participant ID (e.g., p1):", name: "participant_id" }],
+      { prompt: "Please enter your participant ID:", name: "participant_id" }],
     on_finish: function (data) {
       console.log(data.response)
       jsPsych.data.addProperties({
@@ -78,6 +67,13 @@
     }
   };
   timeline.push(participant_id_entry);
+  
+  // welcome message trial
+  var welcome = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: "<p>Welcome to the experiment.<br><br>You will see 200 statements about science and math.<br><br>Please read the statements and respond with whether you think they are <b>true (Z key)</b> or <b>false (M key)</b> as quickly as possible!<br><br>Press any key to begin.</p>"
+  };
+  timeline.push(welcome);
 
   // get a list of unique category names from scientific_statements array
   var categories = [...new Set(scientific_statements.map(x => x.Category))];
@@ -93,6 +89,7 @@
       return '<div style="font-size:30pt;">' + jsPsych.evaluateTimelineVariable('Statement') + '</div>';
     }, // added here to make statement font size bigger than the reminder note about pressing Z or M
     choices: ['z', 'm', 't'],
+    post_trial_gap: 500, // inter-trial interval of 500 ms
     // data we are recording per trial (domain/category, scientific theory answer, naive theory answer, concept tested, mean proportion answered correct, mean answering response time)
     data: function () {
       return {
@@ -100,8 +97,6 @@
         correct_response: jsPsych.timelineVariable('T2'),
         naive_theory: jsPsych.timelineVariable('T1'),
         concept: jsPsych.timelineVariable('Concept'),
-        m_prop_correct: jsPsych.timelineVariable('M proportion correct'),
-        m_rt: jsPsych.timelineVariable('M response time (ms)'),
       };
     },
     on_finish: function (data) {
@@ -121,7 +116,7 @@
   };
 
   // create category blocks with all of the statements 
-  for (var i = 0; i < categories.length; i++) { // iterate through the domains (10)
+  for (var i = 0; i < 6; i++) { // iterate through the domains (a random 6)
     let category = categories[i];
     // intro screen for the category (domain)
     var before_category = {
