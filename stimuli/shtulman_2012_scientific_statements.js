@@ -5,7 +5,7 @@ var scientific_statements = [
     "Concept": "AttentionCheck",
     "T1": "T3",
     "T2": "T3",
-    "Statement": "Press T if you are paying attention",
+    "Statement": "Press T if you are paying attention. Do not press z or m.",
     "M proportion correct": 0,
     "M response time (ms)": 0
   },
@@ -194,7 +194,7 @@ var scientific_statements = [
     "Concept": "AttentionCheck",
     "T1": "T3",
     "T2": "T3",
-    "Statement": "Press T if you are paying attention",
+    "Statement": "Press T if you are paying attention. Do not press z or m.",
     "M proportion correct": 0,
     "M response time (ms)": 0
   },
@@ -383,7 +383,7 @@ var scientific_statements = [
     "Concept": "AttentionCheck",
     "T1": "T3",
     "T2": "T3",
-    "Statement": "Press T if you are paying attention",
+    "Statement": "Press T if you are paying attention. Do not press z or m.",
     "M proportion correct": 0,
     "M response time (ms)": 0
   },
@@ -572,7 +572,7 @@ var scientific_statements = [
     "Concept": "AttentionCheck",
     "T1": "T3",
     "T2": "T3",
-    "Statement": "Press T if you are paying attention",
+    "Statement": "Press T if you are paying attention. Do not press z or m.",
     "M proportion correct": 0,
     "M response time (ms)": 0
   },
@@ -761,7 +761,7 @@ var scientific_statements = [
     "Concept": "AttentionCheck",
     "T1": "T3",
     "T2": "T3",
-    "Statement": "Press T if you are paying attention",
+    "Statement": "Press T if you are paying attention. Do not press z or m.",
     "M proportion correct": 0,
     "M response time (ms)": 0
   },
@@ -950,7 +950,7 @@ var scientific_statements = [
     "Concept": "AttentionCheck",
     "T1": "T3",
     "T2": "T3",
-    "Statement": "Press T if you are paying attention",
+    "Statement": "Press T if you are paying attention. Do not press z or m.",
     "M proportion correct": 0,
     "M response time (ms)": 0
   },
@@ -1139,7 +1139,7 @@ var scientific_statements = [
     "Concept": "AttentionCheck",
     "T1": "T3",
     "T2": "T3",
-    "Statement": "Press T if you are paying attention",
+    "Statement": "Press T if you are paying attention. Do not press z or m.",
     "M proportion correct": 0,
     "M response time (ms)": 0
   },
@@ -1328,7 +1328,7 @@ var scientific_statements = [
     "Concept": "AttentionCheck",
     "T1": "T3",
     "T2": "T3",
-    "Statement": "Press T if you are paying attention",
+    "Statement": "Press T if you are paying attention. Do not press z or m.",
     "M proportion correct": 0,
     "M response time (ms)": 0
   },
@@ -1517,7 +1517,7 @@ var scientific_statements = [
     "Concept": "AttentionCheck",
     "T1": "T3",
     "T2": "T3",
-    "Statement": "Press T if you are paying attention",
+    "Statement": "Press T if you are paying attention. Do not press z or m.",
     "M proportion correct": 0,
     "M response time (ms)": 0
   },
@@ -1706,7 +1706,7 @@ var scientific_statements = [
     "Concept": "AttentionCheck",
     "T1": "T3",
     "T2": "T3",
-    "Statement": "Press T if you are paying attention",
+    "Statement": "Press T if you are paying attention. Do not press z or m.",
     "M proportion correct": 0,
     "M response time (ms)": 0
   },
